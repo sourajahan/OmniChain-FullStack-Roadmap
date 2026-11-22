@@ -1,6 +1,6 @@
  <div align="center">
 
-<!-- Animated Gradient Banner & Typing Header -->
+<!-- Animated Gradient Banner -->
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,50:1E3A8A,100:0284C7&height=210&section=header&text=OmniChain%20Enterprise&fontSize=48&fontColor=38BDF8&animation=fadeIn&fontAlignY=38&desc=Full-Stack%20Engineering%20Master%20Blueprint%20%7C%206%2B1%20Production%20Modules&descAlignY=62&descSize=18&descColor=E2E8F0" width="100%" />
 
 <br/>
@@ -34,35 +34,50 @@ Instead of building isolated toy apps, this repository serves as the **Master Ar
 
 ---
 
-## 🌈 Interactive Colored System Flowchart (Mermaid)
+## 🌈 System Architecture & Engineering Flowcharts
+
+### 1️⃣ End-to-End Platform Architecture (Live Request & Event Flow)
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1e293b', 'edgeLabelBackground':'#0f172a', 'tertiaryColor': '#1e293b'}}}%%
-flowchart TD
-    %% Styling Definitions
-    classDef frontend fill:#7c3aed,stroke:#c4b5fd,stroke-width:2px,color:#ffffff,font-weight:bold;
-    classDef security fill:#059669,stroke:#6ee7b7,stroke-width:2px,color:#ffffff,font-weight:bold;
-    classDef backend fill:#2563eb,stroke:#93c5fd,stroke-width:2px,color:#ffffff,font-weight:bold;
-    classDef search fill:#d97706,stroke:#fcd34d,stroke-width:2px,color:#ffffff,font-weight:bold;
-    classDef database fill:#0284c7,stroke:#7dd3fc,stroke-width:2px,color:#ffffff,font-weight:bold;
-    classDef queue fill:#db2777,stroke:#f9a8d4,stroke-width:2px,color:#ffffff,font-weight:bold;
-    classDef capstone fill:#dc2626,stroke:#fca5a5,stroke-width:3px,color:#ffffff,font-weight:bold;
-    classDef hyperscale fill:#111827,stroke:#f59e0b,stroke-width:3px,color:#fbbf24,font-weight:bold;
+%%{init: {'theme': 'dark', 'themeVariables': { 'fontFamily': 'Fira Code, sans-serif', 'primaryTextColor': '#ffffff', 'lineColor': '#38bdf8'}}}%%
+flowchart TB
+    %% Vibrant Node Styles
+    classDef client fill:#6d28d9,stroke:#ddd6fe,stroke-width:2px,color:#ffffff,rx:10,ry:10;
+    classDef gateway fill:#059669,stroke:#a7f3d0,stroke-width:2px,color:#ffffff,rx:10,ry:10;
+    classDef service fill:#1d4ed8,stroke:#bfdbfe,stroke-width:2px,color:#ffffff,rx:10,ry:10;
+    classDef cache fill:#d97706,stroke:#fde68a,stroke-width:2px,color:#ffffff,rx:10,ry:10;
+    classDef db fill:#0369a1,stroke:#bae6fd,stroke-width:2px,color:#ffffff,rx:10,ry:10;
+    classDef async fill:#be185d,stroke:#fbcfe8,stroke-width:2px,color:#ffffff,rx:10,ry:10;
+    classDef scale fill:#b91c1c,stroke:#fecaca,stroke-width:3px,color:#ffffff,rx:12,ry:12;
 
-    M3["🎨 MODULE 3: Modern Type-Safe Frontend<br/>(React • TypeScript • Tailwind • TanStack Query)"]:::frontend
-    M5["🛡️ MODULE 5: Cloud Security & Edge Gateway<br/>(HTTPS • OWASP Top 10 • Rate Limiting • CDN)"]:::security
-    M2["🔐 MODULE 2: Core Auth & Order API<br/>(Flask • FastAPI • JWT • RBAC • SQLAlchemy)"]:::backend
-    M4["⚙️ MODULE 4: High-Speed Search & DevOps<br/>(Redis Cache • Pagination • Docker • CI/CD)"]:::search
-    M1["📦 MODULE 1: Core Inventory & DB Engine<br/>(PostgreSQL • Indexing • ACID • EXPLAIN • CLI)"]:::database
-    M6["⚡ MODULE 6: Distributed Queue & Workers<br/>(Message Queue • Load Balancer • Payment/SMS)"]:::queue
-    P7["🚀 PROJECT 7: OMNICHAIN ENTERPRISE PLATFORM<br/>(Unified Microservices + API Gateway + Docker Compose)"]:::capstone
-    P8["🔥 PHASE 8: HYPERSCALE EDITION (Amazon/Google Scale)<br/>(Apache Kafka • Kubernetes • AI Vector Search • Saga • OpenTelemetry)"]:::hyperscale
+    subgraph CLIENT_LAYER ["🌐 Client & Presentation Layer"]
+        M3["🎨 MODULE 3: Storefront & Admin UI<br/>React • TypeScript • Tailwind • TanStack Query"]:::client
+    end
 
-    M3 ==>|HTTPS / REST| M5
-    M5 ==>|Auth & Orders| M2
-    M5 ==>|Fast Search & Media| M4
-    M2 ==>|ACID Transactions| M1
-    M4 ==>|Cache Miss / Sync| M1
-    M1 ==>|Async Events| M6
-    M2 & M4 & M6 ==> P7
-    P7 ==>|Scale Out| P8
+    subgraph EDGE_LAYER ["🛡️ Edge Security & Cloud Gateway"]
+        M5["🔒 MODULE 5: Cloud Gateway & Security<br/>HTTPS/SSL • OWASP Top 10 • Rate Limiter • CDN"]:::gateway
+    end
+
+    subgraph CORE_SERVICES ["⚙️ Core Microservices & Speed Layer"]
+        direction LR
+        M2["🔐 MODULE 2: Auth & Order API<br/>Flask • FastAPI • JWT • RBAC"]:::service
+        M4["⚡ MODULE 4: Search & DevOps<br/>Redis Cache • Pagination • Docker • CI/CD"]:::cache
+    end
+
+    subgraph DATA_ASYNC ["💾 Persistence & Event Streaming Layer"]
+        direction LR
+        M1["📦 MODULE 1: Core Inventory DB<br/>PostgreSQL • ACID • Indexes • EXPLAIN"]:::db
+        M6["📨 MODULE 6: Async Queue & Workers<br/>Message Queue • Load Balancer • Payment/SMS"]:::async
+    end
+
+    subgraph ENTERPRISE_CAPSTONE ["🚀 Unified Enterprise & Hyperscale Platform"]
+        P7["🏆 PROJECT 7 & PHASE 8: OMNICHAIN ENTERPRISE<br/>API Gateway • Apache Kafka • Kubernetes • AI Vector Search • Saga"]:::scale
+    end
+
+    M3 ==>|"1. HTTPS Request"| M5
+    M5 ==>|"2. Auth & Checkout"| M2
+    M5 ==>|"3. Fast Catalog Search"| M4
+    M2 ==>|"4. Atomic Stock Lock"| M1
+    M4 -.->|"5. Cache Miss Sync"| M1
+    M1 ==>|"6. Order Created Event"| M6
+    M2 & M4 & M6 ==>|"7. Microservice Mesh"| P7
