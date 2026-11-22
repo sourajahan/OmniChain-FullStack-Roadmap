@@ -1,41 +1,46 @@
  <div align="center">
 
+<!-- Reliable Vibrant Gradient Header Banner -->
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1E1B4B,35:1D4ED8,70:0284C7,100:059669&height=200&section=header&text=SmartStock%20CLI%20%26%20DB&fontSize=44&fontColor=FFFFFF&animation=fadeIn&fontAlignY=38&desc=Module%2001%20%2F%2006%20%E2%80%94%20Systems%20Foundations%2C%20Python%20Engineering%20%26%20Commerce%20DB&descAlignY=63&descSize=15&descColor=BAE6FD" width="100%" />
+
+<!-- Live Typing Animation -->
+<a href="../README.md">
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=18&duration=2600&pause=800&color=38BDF8&center=true&vCenter=true&width=820&lines=01.+Linux+%26+Git+%E2%80%A2+02.+Python+Core+%26+OOP+%E2%80%A2+03.+PostgreSQL+ACID+%26+REST;2+Complete+Python+Applications+%2B+Normalized+Store+Database;Zero-Overselling+Concurrency+Control+with+Row-Level+Locking" alt="Typing SVG" />
+</a>
+
 <br/>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://capsule-render.vercel.app/api?type=transparent&height=125&section=header&text=SmartStock%20CLI%20%26%20DB&fontSize=50&fontColor=F8FAFC&fontAlignY=40&desc=Module%2001%20%2F%2006%20%E2%80%94%20Systems%20Foundations%2C%20Python%20Engineering%20%26%20Relational%20Commerce%20Core&descAlignY=74&descSize=15&descColor=38BDF8" />
-  <img alt="SmartStock CLI & DB" src="https://capsule-render.vercel.app/api?type=transparent&height=125&section=header&text=SmartStock%20CLI%20%26%20DB&fontSize=50&fontColor=0F172A&fontAlignY=40&desc=Module%2001%20%2F%2006%20%E2%80%94%20Systems%20Foundations%2C%20Python%20Engineering%20%26%20Relational%20Commerce%20Core&descAlignY=74&descSize=15&descColor=0284C7" />
-</picture>
-
+<!-- Colorful Navigation Badges -->
 <p>
-  <a href="../README.md"><img src="https://img.shields.io/badge/⬅_OmniChain-Master_Blueprint-0F172A?style=flat-square&logo=github&logoColor=white" /></a>
-  <a href="#part-i-systems--engineering-foundations"><img src="https://img.shields.io/badge/Part_I-6_Engineering_Pillars-0284C7?style=flat-square" /></a>
-  <a href="#part-ii-production-deliverables-architecture"><img src="https://img.shields.io/badge/Part_II-2_Python_Systems_%2B_PostgreSQL-064E3B?style=flat-square" /></a>
-  <img src="https://img.shields.io/badge/Guarantee-ACID_%26_Zero_Overselling-1E3A8A?style=flat-square" />
+  <a href="../README.md"><img src="https://img.shields.io/badge/⬅_Master-OmniChain_Core-0F172A?style=for-the-badge&logo=github&logoColor=white" /></a>
+  <a href="#part-i-systems--engineering-foundations"><img src="https://img.shields.io/badge/Part_I-6_Engineering_Pillars-6366F1?style=for-the-badge" /></a>
+  <a href="#part-ii-production-deliverables-architecture"><img src="https://img.shields.io/badge/Part_II-2_Python_Apps_%2B_DB-10B981?style=for-the-badge" /></a>
+  <img src="https://img.shields.io/badge/Guarantee-ACID_%26_Zero_Overselling-F59E0B?style=for-the-badge" />
 </p>
 
+<!-- Tech Stack Icons -->
 <p>
   <img src="https://skillicons.dev/icons?i=linux,git,github,py,postgres,postman&perline=6" />
 </p>
 
-<br/>
 </div>
 
 ---
 
-## Executive Summary & Architectural Role
+## 🎯 Executive Summary & Architectural Role
 
 **SmartStock-CLI-DB** is the foundational transactional layer of the **OmniChain Enterprise Platform**. Before introducing web frameworks, caches, or distributed brokers, a commerce system must guarantee **data integrity, concurrency safety, and clean domain boundaries** at the operating system, language, and relational storage layers.
 
-This specification is structured into two distinct halves:
-* **Part I (Engineering Foundations):** Deep architectural breakdown of the six core disciplines—from Linux process streams and Git workflows to Python memory structures, PostgreSQL ACID row-locking, and stateless HTTP/REST contracts.
-* **Part II (Production Deliverables):** Three integrated engineering artifacts—a **3NF PostgreSQL Store Database**, an **Object-Oriented CLI Inventory & Flash-Sale Engine**, and a **Zero-Dependency REST API Gateway** verified via Postman.
+* 🟦 **Part I (Engineering Foundations):** Deep breakdown of the six core disciplines—from Linux process streams and Git workflows to Python memory structures, PostgreSQL ACID row-locking, and stateless HTTP/REST contracts.
+* 🟩 **Part II (Production Deliverables):** Three integrated engineering artifacts—a **3NF PostgreSQL Store Database**, an **Object-Oriented CLI Inventory & Flash-Sale Engine**, and a **Zero-Dependency REST API Gateway** verified via Postman.
 
 ---
 
 # Part I: Systems & Engineering Foundations
 
-### 01. Linux Kernel Space, Shell & Process Hygiene
+### 🟨 01. Linux Kernel Space, Shell & Process Hygiene
+![Linux](https://img.shields.io/badge/Linux_Shell-FCC624?style=flat-square&logo=linux&logoColor=black) ![Bash](https://img.shields.io/badge/Bash_Pipes-4EAA25?style=flat-square&logo=gnubash&logoColor=white) ![Security](https://img.shields.io/badge/Env_Isolation-EF4444?style=flat-square)
+
 | Primitive | Engineering Mechanism | Production Application in SmartStock |
 | :--- | :--- | :--- |
 | **`cd, ls, cp, mv, rm`** | Direct inode traversal and filesystem tree manipulation (`ls -la` for hidden dotfiles, `rm -rf` for deterministic cache purges). | Managing multi-package directory trees, rotating JSON backup snapshots, and cleaning `__pycache__` artifacts. |
@@ -45,7 +50,9 @@ This specification is structured into two distinct halves:
 
 ---
 
-### 02. Distributed Version Control (Git & GitHub Flow)
+### 🟧 02. Distributed Version Control (Git & GitHub Flow)
+![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub_PRs-181717?style=flat-square&logo=github&logoColor=white) ![Workflow](https://img.shields.io/badge/Feature_Branching-8B5CF6?style=flat-square)
+
 | Primitive | Engineering Mechanism | Production Application in SmartStock |
 | :--- | :--- | :--- |
 | **`init, add, commit`** | Content-addressable SHA-1 object graph tracking atomic repository snapshots via staging index (`git add -p`). | Recording granular, self-contained engineering milestones using Conventional Commits (`feat:`, `fix:`, `perf:`, `test:`). |
@@ -55,7 +62,9 @@ This specification is structured into two distinct halves:
 
 ---
 
-### 03. Python Core: Type Systems, Control Flow & Complexity
+### 🟦 03. Python Core: Type Systems, Control Flow & Complexity
+![Python](https://img.shields.io/badge/Python_3.12+-3776AB?style=flat-square&logo=python&logoColor=white) ![Typing](https://img.shields.io/badge/Static_Typing-0284C7?style=flat-square) ![Big-O](https://img.shields.io/badge/O(1)_Lookups-10B981?style=flat-square)
+
 | Primitive | Engineering Mechanism | Production Application in SmartStock |
 | :--- | :--- | :--- |
 | **`type` & `variable`** | Explicit static type annotations (`sku: str`, `unit_price: Decimal`, `qty: int`) enforcing self-documenting contracts and IDE static analysis. | Eliminating floating-point currency rounding bugs by enforcing `decimal.Decimal` across all ledger calculations. |
@@ -65,7 +74,9 @@ This specification is structured into two distinct halves:
 
 ---
 
-### 04. Practical Python: Domain Modeling, Persistence & Verification
+### 🟪 04. Practical Python: Domain Modeling, Persistence & Verification
+![OOP](https://img.shields.io/badge/OOP_%26_Dataclasses-7C3AED?style=flat-square) ![JSON](https://img.shields.io/badge/JSON_%26_File_I%2FO-F59E0B?style=flat-square) ![Pytest](https://img.shields.io/badge/Pytest_Verified-0A9EDC?style=flat-square&logo=pytest&logoColor=white)
+
 | Primitive | Engineering Mechanism | Production Application in SmartStock |
 | :--- | :--- | :--- |
 | **`file` & `JSON`** | Context-managed I/O streams (`with open(...)`) and structured serialization (`json.dumps` / `json.loads`) with custom encoders. | Exporting daily warehouse audit trails to `.json` and ingesting bulk supplier catalog updates safely. |
@@ -75,7 +86,9 @@ This specification is structured into two distinct halves:
 
 ---
 
-### 05. SQL & PostgreSQL Relational Internals
+### 🩵 05. SQL & PostgreSQL Relational Internals
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL_16-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![ACID](https://img.shields.io/badge/ACID_Transactions-059669?style=flat-square) ![Indexing](https://img.shields.io/badge/B--Tree_%26_EXPLAIN-0EA5E9?style=flat-square)
+
 | Primitive | Engineering Mechanism | Production Application in SmartStock |
 | :--- | :--- | :--- |
 | **`SELECT` & `WHERE`** | Relational projection and predicate filtering leveraging sargable expressions (`=`, `IN`, `BETWEEN`) over indexed columns. | Querying low-stock SKUs (`WHERE stock_qty <= reorder_threshold`) and filtering active customer orders by timestamp range. |
@@ -85,7 +98,9 @@ This specification is structured into two distinct halves:
 
 ---
 
-### 06. HTTP Protocol & Stateless REST Architecture
+### 🩷 06. HTTP Protocol & Stateless REST Architecture
+![REST](https://img.shields.io/badge/RESTful_HTTP-EC4899?style=flat-square) ![CORS](https://img.shields.io/badge/CORS_Security-DC2626?style=flat-square) ![Postman](https://img.shields.io/badge/Postman_Collection-FF6C37?style=flat-square&logo=postman&logoColor=white)
+
 | Primitive | Engineering Mechanism | Production Application in SmartStock |
 | :--- | :--- | :--- |
 | **`method` & `status code`** | Uniform interface mapping (`GET`, `POST`, `PATCH`, `DELETE`) paired with exact semantic response signaling (`200`, `201`, `400`, `404`, `409`). | Returning `201 Created` with `Location` header on order placement, and `409 Conflict` when `OutOfStockError` triggers. |
@@ -96,8 +111,6 @@ This specification is structured into two distinct halves:
 ---
 
 # Part II: Production Deliverables Architecture
-
-Rather than isolated toy scripts, all concepts from **Part I** converge into **three interconnected production artifacts**:
 
 ```text
   ┌────────────────────────────────────────────────────────────────────────────────────────┐
