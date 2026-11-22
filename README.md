@@ -1,83 +1,73 @@
  <div align="center">
 
-<!-- Animated Gradient Banner -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,50:1E3A8A,100:0284C7&height=210&section=header&text=OmniChain%20Enterprise&fontSize=48&fontColor=38BDF8&animation=fadeIn&fontAlignY=38&desc=Full-Stack%20Engineering%20Master%20Blueprint%20%7C%206%2B1%20Production%20Modules&descAlignY=62&descSize=18&descColor=E2E8F0" width="100%" />
-
-<br/>
-
-<a href="https://github.com/sourajahan/OmniChain-FullStack-Roadmap">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=22&duration=2800&pause=800&color=38BDF8&center=true&vCenter=true&width=820&lines=Building+Hyperscale+Commerce+%26+Supply+Chain+Systems;Linux+%E2%80%A2+Python+%E2%80%A2+PostgreSQL+%E2%80%A2+Flask+%E2%80%A2+FastAPI+%E2%80%A2+React;Docker+%E2%80%A2+Redis+%E2%80%A2+AWS+%E2%80%A2+Kafka+%E2%80%A2+Kubernetes+%E2%80%A2+AI+Search" alt="Typing SVG" />
-</a>
+<!-- Minimalist, Ultra-Clean Modern Dark Header -->
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:090D16,100:131C31&height=180&section=header&text=OmniChain%20Core&fontSize=52&fontColor=F8FAFC&fontAlignY=42&desc=Enterprise%20Commerce%20%26%20Supply%20Chain%20Engine%20%7C%20Engineering%20Blueprint&descAlignY=68&descSize=16&descColor=94A3B8" width="100%" />
 
 <br/>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Architecture-Event--Driven_Microservices-0EA5E9?style=for-the-badge&logo=diagramsdotnet&logoColor=white" />
-  <img src="https://img.shields.io/badge/Scale-Hyperscale_Ready-F59E0B?style=for-the-badge&logo=kubernetes&logoColor=white" />
-  <img src="https://img.shields.io/badge/Test_Coverage-%3E_70%25_Pytest-10B981?style=for-the-badge&logo=pytest&logoColor=white" />
-  <img src="https://img.shields.io/badge/Security-OWASP_Top_10-EF4444?style=for-the-badge&logo=shield&logoColor=white" />
+  <img src="https://img.shields.io/badge/Core_Stack-Python_%E2%80%A2_PostgreSQL_%E2%80%A2_FastAPI_%E2%80%A2_React-0F172A?style=for-the-badge&logo=python&logoColor=38BDF8" />
+  <img src="https://img.shields.io/badge/Infrastructure-Docker_%E2%80%A2_Redis_%E2%80%A2_AWS_%E2%80%A2_Kafka_%E2%80%A2_K8s-0F172A?style=for-the-badge&logo=kubernetes&logoColor=38BDF8" />
+  <img src="https://img.shields.io/badge/Quality-ACID_%E2%80%A2_OWASP_%E2%80%A2_%3E70%25_Coverage-0F172A?style=for-the-badge&logo=pytest&logoColor=10B981" />
 </p>
 
 </div>
 
 ---
 
-## 🌍 Executive Summary & Real-World Problem
+## 🎯 The Engineering Mission
 
-Modern e-commerce, supply chain, and logistics platforms face a critical engineering bottleneck:  
-> *"How do you allow thousands of concurrent users to search catalogs in milliseconds, guarantee zero overselling during flash sales, secure multi-role access, and process payments/notifications asynchronously without system downtime?"*
-
-### 🎯 The Engineering Strategy
-Instead of building isolated toy apps, this repository serves as the **Master Architecture Hub** for an incremental, **6+1 Modular Engineering Journey**:
-* **Months 1 – 6:** Build **6 standalone, production-ready repositories**, each mastering a core layer of the modern full-stack ecosystem.
-* **Project 7 (Capstone) & Phase 8 (Hyperscale):** Unify all 6 microservices into a single enterprise-grade platform powered by **API Gateways, Kafka, Kubernetes, and AI Vector Search**.
+**OmniChain Core** is an end-to-end, production-grade Commerce & Supply Chain platform built to solve four real-world distributed systems challenges:
+1. **Zero-Overselling Guarantee:** Atomic row-level locking in PostgreSQL during high-concurrency flash sales.
+2. **Sub-Millisecond Discovery:** Multi-layer Redis caching and semantic AI vector search across massive product catalogs.
+3. **Zero-Trust Security:** Stateless JWT authentication, strict Role-Based Access Control (RBAC), rate limiting, and OWASP Top 10 hardening.
+4. **Fault-Tolerant Async Processing:** Decoupling payment captures and notifications via event queues so traffic spikes never degrade API latency.
 
 ---
 
-## 🌈 System Architecture & Engineering Flowcharts
+## 🧭 Progressive Build Architecture (How 6 Modules Become 1 Platform)
 
-### 1️⃣ End-to-End Platform Architecture (Live Request & Event Flow)
+Rather than writing monolithic tutorial code, this platform is engineered incrementally across **6 standalone repositories** (Months 1–6) and unified into **Project 7 (Capstone)** & **Phase 8 (Hyperscale)**:
 
 ```mermaid
-%%{init: {'theme': 'dark', 'themeVariables': { 'fontFamily': 'Fira Code, sans-serif', 'primaryTextColor': '#ffffff', 'lineColor': '#38bdf8'}}}%%
-flowchart TB
-    %% Vibrant Node Styles
-    classDef client fill:#6d28d9,stroke:#ddd6fe,stroke-width:2px,color:#ffffff,rx:10,ry:10;
-    classDef gateway fill:#059669,stroke:#a7f3d0,stroke-width:2px,color:#ffffff,rx:10,ry:10;
-    classDef service fill:#1d4ed8,stroke:#bfdbfe,stroke-width:2px,color:#ffffff,rx:10,ry:10;
-    classDef cache fill:#d97706,stroke:#fde68a,stroke-width:2px,color:#ffffff,rx:10,ry:10;
-    classDef db fill:#0369a1,stroke:#bae6fd,stroke-width:2px,color:#ffffff,rx:10,ry:10;
-    classDef async fill:#be185d,stroke:#fbcfe8,stroke-width:2px,color:#ffffff,rx:10,ry:10;
-    classDef scale fill:#b91c1c,stroke:#fecaca,stroke-width:3px,color:#ffffff,rx:12,ry:12;
+%%{init: {'theme': 'base', 'themeVariables': { 'background': '#0B0F19', 'primaryColor': '#1E293B', 'primaryTextColor': '#F8FAFC', 'primaryBorderColor': '#38BDF8', 'lineColor': '#64748B', 'secondaryColor': '#0F172A', 'tertiaryColor': '#1E293B', 'fontFamily': 'Inter, system-ui, sans-serif'}}}%%
+flowchart LR
+    %% Clean Architectural Color Palette
+    classDef m1 fill:#0C4A6E,stroke:#38BDF8,stroke-width:2px,color:#F0F9FF;
+    classDef m2 fill:#1E3A8A,stroke:#60A5FA,stroke-width:2px,color:#EFF6FF;
+    classDef m3 fill:#4C1D95,stroke:#A78BFA,stroke-width:2px,color:#F5F3FF;
+    classDef m4 fill:#78350F,stroke:#FBBF24,stroke-width:2px,color:#FFFBEB;
+    classDef m5 fill:#064E3B,stroke:#34D399,stroke-width:2px,color:#ECFDF5;
+    classDef m6 fill:#831843,stroke:#F472B6,stroke-width:2px,color:#FDF2F8;
+    classDef cap fill:#7F1D1D,stroke:#F87171,stroke-width:2.5px,color:#FEF2F2;
+    classDef hyp fill:#111827,stroke:#F59E0B,stroke-width:3px,color:#FDE68A;
 
-    subgraph CLIENT_LAYER ["🌐 Client & Presentation Layer"]
-        M3["🎨 MODULE 3: Storefront & Admin UI<br/>React • TypeScript • Tailwind • TanStack Query"]:::client
+    subgraph PHASE_1 ["Foundations & Core API"]
+        direction TB
+        M1["<b>01. SmartStock-CLI-DB</b><br/>Linux • Python OOP • PostgreSQL ACID"]:::m1
+        M2["<b>02. CoreAuth-Order-API</b><br/>Flask • FastAPI • JWT/RBAC • Pytest"]:::m2
+        M1 -->|"Exposes DB Engine"| M2
     end
 
-    subgraph EDGE_LAYER ["🛡️ Edge Security & Cloud Gateway"]
-        M5["🔒 MODULE 5: Cloud Gateway & Security<br/>HTTPS/SSL • OWASP Top 10 • Rate Limiter • CDN"]:::gateway
+    subgraph PHASE_2 ["Experience & Speed"]
+        direction TB
+        M3["<b>03. OmniStore-Frontend</b><br/>React • TypeScript • Tailwind • Query"]:::m3
+        M4["<b>04. SearchMedia-DevOps</b><br/>Redis Cache • Docker • CI/CD Actions"]:::m4
+        M3 <-->|"Cached API"| M4
     end
 
-    subgraph CORE_SERVICES ["⚙️ Core Microservices & Speed Layer"]
-        direction LR
-        M2["🔐 MODULE 2: Auth & Order API<br/>Flask • FastAPI • JWT • RBAC"]:::service
-        M4["⚡ MODULE 4: Search & DevOps<br/>Redis Cache • Pagination • Docker • CI/CD"]:::cache
+    subgraph PHASE_3 ["Production & Scale"]
+        direction TB
+        M5["<b>05. CloudShield-Gateway</b><br/>AWS • HTTPS • OWASP Top 10 • CDN"]:::m5
+        M6["<b>06. AsyncQueue-Notifier</b><br/>Message Queue • Load Balancer • APIs"]:::m6
+        M5 -->|"Offloads Tasks"| M6
     end
 
-    subgraph DATA_ASYNC ["💾 Persistence & Event Streaming Layer"]
-        direction LR
-        M1["📦 MODULE 1: Core Inventory DB<br/>PostgreSQL • ACID • Indexes • EXPLAIN"]:::db
-        M6["📨 MODULE 6: Async Queue & Workers<br/>Message Queue • Load Balancer • Payment/SMS"]:::async
+    subgraph FINAL ["Enterprise Unification"]
+        direction TB
+        P7["<b>07. OmniChain-Enterprise</b><br/>Unified Microservices + API Gateway"]:::cap
+        P8["<b>08. Hyperscale Upgrade</b><br/>Kafka • Kubernetes • AI Search • Saga"]:::hyp
+        P7 ==>|"Scales To"| P8
     end
 
-    subgraph ENTERPRISE_CAPSTONE ["🚀 Unified Enterprise & Hyperscale Platform"]
-        P7["🏆 PROJECT 7 & PHASE 8: OMNICHAIN ENTERPRISE<br/>API Gateway • Apache Kafka • Kubernetes • AI Vector Search • Saga"]:::scale
-    end
-
-    M3 ==>|"1. HTTPS Request"| M5
-    M5 ==>|"2. Auth & Checkout"| M2
-    M5 ==>|"3. Fast Catalog Search"| M4
-    M2 ==>|"4. Atomic Stock Lock"| M1
-    M4 -.->|"5. Cache Miss Sync"| M1
-    M1 ==>|"6. Order Created Event"| M6
-    M2 & M4 & M6 ==>|"7. Microservice Mesh"| P7
+    PHASE_1 ==> PHASE_2 ==> PHASE_3 ==> FINAL
