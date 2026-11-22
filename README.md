@@ -1,125 +1,165 @@
- <div align="center">
+ ```markdown
+<div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=rect&color=0:090D16,100:131C31&height=170&section=header&text=OmniChain%20Core&fontSize=50&fontColor=38BDF8&fontAlignY=42&desc=Enterprise%20Commerce%20%26%20Supply%20Chain%20Engine%20%7C%206%2B1%20Roadmap&descAlignY=68&descSize=16&descColor=94A3B8" width="100%" />
-
+<!-- Minimalist Engineering Header (Vercel / Stripe / Linear Aesthetic) -->
 <br/>
+<h1>OmniChain Core</h1>
+<p><strong>Distributed Commerce, Atomic Inventory & High-Throughput Supply Chain Engine</strong></p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Core_Stack-Python_%E2%80%A2_PostgreSQL_%E2%80%A2_FastAPI_%E2%80%A2_React-0F172A?style=for-the-badge&logo=python&logoColor=38BDF8" />
-  <img src="https://img.shields.io/badge/Cloud_%26_Scale-Docker_%E2%80%A2_Redis_%E2%80%A2_AWS_%E2%80%A2_Kafka_%E2%80%A2_K8s-0F172A?style=for-the-badge&logo=kubernetes&logoColor=38BDF8" />
-  <img src="https://img.shields.io/badge/Quality-ACID_%E2%80%A2_OWASP_%E2%80%A2_%3E70%25_Coverage-0F172A?style=for-the-badge&logo=pytest&logoColor=10B981" />
+<p>
+  <a href="#-the-engineering-problem">Problem</a> •
+  <a href="#-system-topology">Architecture</a> •
+  <a href="#-core-engineering-challenges">Challenges</a> •
+  <a href="#-61-incremental-build-modules">Modules (1–6)</a> •
+  <a href="#-hyperscale-evolution">Hyperscale</a>
 </p>
 
+<p>
+  <img src="https://img.shields.io/badge/Build-Modular_6%2B1_Architecture-111827?style=flat-square&logo=github&logoColor=white" />
+  <img src="https://img.shields.io/badge/Core-Python_%7C_PostgreSQL_%7C_FastAPI_%7C_React-0F172A?style=flat-square&logo=python&logoColor=38BDF8" />
+  <img src="https://img.shields.io/badge/Infra-Docker_%7C_Redis_%7C_AWS_%7C_Kafka_%7C_K8s-0F172A?style=flat-square&logo=kubernetes&logoColor=38BDF8" />
+  <img src="https://img.shields.io/badge/Reliability-ACID_%7C_OWASP_%7C_%3E70%25_Cov-064E3B?style=flat-square&logo=pytest&logoColor=34D399" />
+</p>
+<br/>
+
 </div>
 
 ---
 
-## 🎯 The Engineering Mission
+## ⚡ Why OmniChain Exists (The Engineering Problem)
 
-**OmniChain Core** is a production-grade Commerce & Supply Chain platform designed to solve four core distributed systems challenges:
-* **Zero-Overselling Guarantee:** Atomic row-level locking in PostgreSQL during flash sales.
-* **Sub-Millisecond Discovery:** Redis caching and semantic AI vector search across massive catalogs.
-* **Zero-Trust Security:** Stateless JWT auth, strict RBAC, rate limiting, and OWASP Top 10 protection.
-* **Fault-Tolerant Async Workers:** Decoupling payments and notifications via event queues under heavy traffic.
+Most portfolio projects fail to reflect real-world production pressure. They break the moment two users buy the last item simultaneously, choke on unindexed `N+1` queries, or block HTTP threads while waiting for third-party payment gateways.
 
----
+**OmniChain Core** is engineered from the ground up to solve these exact distributed systems bottlenecks:
 
-## 🏛️ System Architecture Blueprint
+```text
+  [ Flash Sale Traffic ] ──► Rate Limiter & Edge WAF ──► Stateless JWT / RBAC
+                                                               │
+         ┌─────────────────────────────────────────────────────┴─────────────────────────────────────────────────────┐
+         ▼                                                                                                           ▼
+  ( Read Path: < 5ms )                                                                                      ( Write Path: ACID )
+  Redis Read-Through Cache ──► Elasticsearch / Vector Search                                                PostgreSQL Row-Level Lock
+                                                                                                                     │
+                                                                                                                     ▼
+                                                                                                           Async Event Broker (Queue)
+                                                                                                           └──► Payment & SMS Workers
 
-<div align="center">
-  <img src="./architecture.jpeg" alt="OmniChain System Architecture" width="100%" />
-</div>
-
----
-
-## 📦 Engineering Curriculum & Modules (1 to 6)
-
-<details open>
-<summary><strong>01. SmartStock-CLI-DB — Foundations, Python & Relational Databases (Month 1)</strong></summary>
-<br/>
-
-* **Repository:** [`SmartStock-CLI-DB`](https://github.com/sourajahan/SmartStock-CLI-DB)
-* **Linux & Shell:** `cd, ls, cp, mv, rm`, `grep` & `pipe`, `chmod` & `permissions`, `environment variables`.
-* **Git & GitHub:** `init, add, commit`, `branch` & `merge`, `conflict` resolution, `Pull Request` & `.gitignore`.
-* **Python Core:** `type` & `variable`, `if, for, while`, `function`, `list, dict, set`.
-* **Practical Python:** `file` & `JSON`, `exception`, `OOP` & `dataclass`, `venv, pip, pytest`.
-* **SQL & PostgreSQL:** `SELECT` & `WHERE`, `JOIN` & `GROUP BY`, `constraint` & `index`, `transaction` & `EXPLAIN`.
-* **HTTP & REST:** `method` & `status code`, `header` & `cookie`, `REST` & `CORS`, `Postman`.
-</details>
-
-<details>
-<summary><strong>02. CoreAuth-Order-API — Backend Engineering, Security & ORM (Month 2)</strong></summary>
-<br/>
-
-* **Repository:** `CoreAuth-Order-API`
-* **Flask Core:** `route, blueprint`, `JSON`, `application factory`, `config`.
-* **Database & ORM:** `SQLAlchemy`, `relationships`, `Alembic migration`, solving the `N+1` problem.
-* **Auth & Security:** `password hashing`, `session vs JWT`, `refresh token`, `RBAC`.
-* **Validation & Error:** `pydantic/marshmallow`, `error handler`, `status code`, `logging`.
-* **Testing:** `pytest fixture`, `test database`, `API tests`, `coverage > 70%`.
-* **FastAPI:** `async`, `Swagger/OpenAPI`, `dependency injection`.
-</details>
-
-<details>
-<summary><strong>03. OmniStore-Frontend-Portal — Type-Safe React & Modern UI (Month 3)</strong></summary>
-<br/>
-
-* **Repository:** `OmniStore-Frontend-Portal`
-* **HTML & CSS:** `semantic HTML`, `Flexbox, Grid`, `responsive`, `accessibility`.
-* **JavaScript:** `closure, scope`, `array methods`, `DOM, event`, `fetch, async/await`.
-* **TypeScript:** `type, interface`, `generic`, `tsconfig`, typing API responses.
-* **React:** `component, props`, `state, useEffect`, `custom hook`, `Router, form`.
-* **Data & UI:** `TanStack Query`, `Tailwind CSS`, `token` login, `loading/error` states.
-</details>
-
-<details>
-<summary><strong>04. SearchMedia-DevOps-Engine — Caching, Containers & CI/CD (Month 4)</strong></summary>
-<br/>
-
-* **Repository:** `SearchMedia-DevOps-Engine`
-* **Backend:** `pagination`, `search`, `file upload`, `API tests`.
-* **Frontend:** `routing`, `validation`, `state management`, `component test`.
-* **DevOps:** `Dockerfile, docker-compose`, `GitHub Actions`, `pre-commit, lint`.
-* **Quality & Scale:** `code review`, `refactor`, `Redis cache`, `ADR`.
-</details>
-
-<details>
-<summary><strong>05. CloudShield-Production-Gateway — Cloud Infrastructure & Security (Month 5)</strong></summary>
-<br/>
-
-* **Repository:** `CloudShield-Production-Gateway`
-* **Deployment:** Cloud hosting (`Render/Railway/AWS`), managed DB, `HTTPS`, `log` & `backup`.
-* **Security & Scale:** `OWASP Top 10`, `rate limiting`, `CDN`, `secrets management`.
-* **Portfolio:** English `README`, demo video, architecture diagram, pinned repos.
-</details>
-
-<details>
-<summary><strong>06. AsyncQueue-Notifier-Service — Distributed Queues & High Availability (Month 6)</strong></summary>
-<br/>
-
-* **Repository:** `AsyncQueue-Notifier-Service`
-* **System Design:** `load balancer`, `caching`, `DB replication`, `queue`, `URL shortener`.
-* **Integrations:** External Payment/SMS APIs with fault tolerance and retries.
-</details>
-
-<details>
-<summary><strong>07 & 08. OmniChain-Enterprise-Platform — Capstone & Hyperscale</strong></summary>
-<br/>
-
-* **Project 7:** Unified microservices ecosystem orchestrated via `Docker Compose` and `API Gateway`.
-* **Phase 8 (Hyperscale):** `Apache Kafka`, `Kubernetes (K8s)`, `Elasticsearch + AI Vector Search`, `Saga Pattern`, `Prometheus & Grafana`.
-</details>
+```
 
 ---
 
-## 📊 Live Progress Tracker
+## 🧭 System Topology & Architectural Blueprint
 
-| Step | Module | Repository | Core Stack | Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **01** | Core Inventory & DB | [`SmartStock-CLI-DB`](https://github.com/sourajahan/SmartStock-CLI-DB) | `Linux` `Git` `Python` `PostgreSQL` | 🟡 **Active** |
+> **Architectural Philosophy:** Every component is isolated by clear domain boundaries. Read-heavy catalog queries never touch the primary transactional database during cache hits, while write-heavy order mutations enforce strict pessimistic locking (`SELECT ... FOR UPDATE`) before emitting asynchronous events.
+
+---
+
+## 🛠️ Core Engineering Trade-offs & Design Decisions
+
+| Engineering Challenge | Naive Approach (Avoided) | OmniChain Production Solution |
+| --- | --- | --- |
+| **Concurrent Flash Sales** | Read stock in Python, subtract, and save (causes race conditions & negative stock). | **PostgreSQL ACID Transactions** with row-level locks (`FOR UPDATE`) & `CHECK (stock >= 0)` constraints. |
+| **Catalog Search Latency** | Running `LIKE '%query%'` directly on PostgreSQL for every keystroke. | **Redis Read-Through Cache** (Module 4) + **Elasticsearch & AI Vector Search** (Phase 8). |
+| **ORM Query Explosion** | Lazy-loading relationships inside loops (`N+1` query bottleneck). | Explicit eager loading (`joinedload / selectinload`) verified via `EXPLAIN ANALYZE`. |
+| **Slow 3rd-Party APIs** | Calling Payment & SMS gateways synchronously inside the checkout HTTP request. | **Event-Driven Message Queue** decoupling order confirmation from background worker retries. |
+| **API Security & Abuse** | Storing JWTs in `localStorage` without rate limits or role checks. | **RBAC** middleware, short-lived access + refresh token rotation, **OWASP Top 10** hardening & **Rate Limiting**. |
+
+---
+
+## 📦 6+1 Incremental Build Modules (Master Curriculum)
+
+Instead of a single tangled codebase, **OmniChain** is built across **6 standalone, production-tested repositories**—each mastering a distinct layer of the stack before converging into the unified enterprise platform.
+
+* **Repository:** [`sourajahan/SmartStock-CLI-DB`](https://www.google.com/search?q=https://github.com/sourajahan/SmartStock-CLI-DB)
+* **Deliverable:** A transaction-safe CLI inventory and order engine backed by an indexed PostgreSQL database.
+* **Engineering Scope:**
+* **Linux & Shell:** File manipulation (`cd, ls, cp, mv, rm`), log filtering (`grep` & `pipe`), executable permissions (`chmod`), and `.env` isolation (`environment variables`).
+* **Git & GitHub Workflow:** Repository lifecycle (`init, add, commit`), feature branching (`branch` & `merge`), resolving `merge conflicts`, `Pull Requests`, and `.gitignore`.
+* **Python Core:** Static typing (`type` & `variable`), control flow (`if, for, while`), pure `functions`, and $O(1)$ lookups (`list, dict, set`).
+* **Practical Python:** Domain modeling (`OOP` & `@dataclass`), `JSON` & file persistence, custom exceptions (`OutOfStockError`), `venv/pip`, and automated testing (`pytest`).
+* **SQL & PostgreSQL:** Querying (`SELECT, WHERE`), aggregations (`JOIN, GROUP BY`), integrity & speed (`constraints, indexes`), `ACID transactions`, and query plan profiling (`EXPLAIN ANALYZE`).
+* **HTTP & REST:** Protocol mechanics (`methods, status codes`), `headers & cookies`, `REST` standards, `CORS`, and API verification (`Postman`).
+
+
+
+* **Repository:** `sourajahan/CoreAuth-Order-API`
+* **Deliverable:** Stateless multi-role (`Admin`, `Warehouse`, `Customer`) REST API with strict schema validation and >70% test coverage.
+* **Engineering Scope:**
+* **Flask Core:** Modular `Blueprints`, JSON lifecycle, `Application Factory` pattern, and environment `Config`.
+* **ORM & Migrations:** `SQLAlchemy` models, relational mapping (`relationships`), schema versioning (`Alembic`), and resolving **`N+1` queries**.
+* **Auth & RBAC:** Cryptographic `password hashing`, `Session vs. JWT`, `Refresh Token` rotation, and Role-Based Access Control (`RBAC`).
+* **Validation & Observability:** Schema enforcement (`Pydantic / Marshmallow`), centralized `error handlers`, semantic `status codes`, and structured `logging`.
+* **Testing:** Isolated `test databases`, `pytest fixtures`, integration `API tests`, and **`>70%` code coverage**.
+* **FastAPI Service:** Asynchronous endpoints (`async/await`), auto-generated `OpenAPI/Swagger` docs, and `Dependency Injection`.
+
+
+
+* **Repository:** `sourajahan/OmniStore-Frontend-Portal`
+* **Deliverable:** Responsive customer storefront and real-time inventory admin portal with strict end-to-end TypeScript contracts.
+* **Engineering Scope:**
+* **HTML5 & CSS3:** `Semantic HTML`, `Flexbox` & `CSS Grid` layouts, mobile-first `responsive` design, and web `accessibility (a11y)`.
+* **Modern JavaScript:** `Closures & scope`, functional `array methods`, `DOM & event` handling, and `fetch / async-await`.
+* **TypeScript:** Strict `types & interfaces`, `generics`, `tsconfig` hardening, and typed API responses.
+* **React Ecosystem:** Component architecture & `props`, `useState / useEffect`, `custom hooks`, `React Router`, and controlled `forms`.
+* **State & Styling:** Server-state caching with `TanStack Query`, `Tailwind CSS`, `JWT` auth interceptors, and graceful `loading / error` states.
+
+
+
+* **Repository:** `sourajahan/SearchMedia-DevOps-Engine`
+* **Deliverable:** High-speed catalog search with Redis, secure media upload pipelines, and automated Docker CI/CD workflows.
+* **Engineering Scope:**
+* **Backend Scale:** Cursor/offset `pagination`, multi-filter `search`, secure `file upload` pipeline, and full API test suites.
+* **Frontend Scale:** Multi-view `routing`, schema form `validation`, global `state management`, and `component tests`.
+* **DevOps & Automation:** Multi-stage `Dockerfile`, `docker-compose` orchestration, `GitHub Actions` CI/CD, `pre-commit` hooks, and automated `linting`.
+* **Architecture & Performance:** `Redis` read-through caching, `code refactoring`, `code review` standards, and Architecture Decision Records (`ADR`).
+
+
+
+* **Repository:** `sourajahan/CloudShield-Production-Gateway`
+* **Deliverable:** Hardened cloud deployment protected against OWASP Top 10 threats with automated backups and edge CDN delivery.
+* **Engineering Scope:**
+* **Cloud Deployment:** Live cloud hosting (`AWS / Railway / Render`), managed PostgreSQL, custom domains with `HTTPS/SSL`, centralized `logs`, and automated `backups`.
+* **Security & Edge:** Mitigation of **`OWASP Top 10`**, API `rate limiting`, static asset `CDN`, and encrypted `secrets management`.
+* **Portfolio & Docs:** System architecture blueprints, live product walkthroughs, and international engineering documentation.
+
+
+
+* **Repository:** `sourajahan/AsyncQueue-Notifier-Service`
+* **Deliverable:** Fault-tolerant background worker service handling payment webhooks and SMS/Email notifications under load.
+* **Engineering Scope:**
+* **System Design:** Horizontal scaling with `Load Balancers`, distributed `caching`, `DB Replication`, `Message Queues`, and URL Shortener architecture.
+* **External Integrations:** Resilient `3rd-Party API` integration (Payment Gateways & SMS/Email providers) with exponential backoff retries and idempotency keys.
+
+
+
+---
+
+## 🚀 Hyperscale Evolution (Project 7 & Phase 8)
+
+Once Modules 1–6 are production-verified, they converge into **`OmniChain-Enterprise-Platform`**:
+
+* **Project 7 (Unified Microservices Mesh):** Connects all 6 repositories behind an **API Gateway** using `Docker Compose` and unified observability.
+* **Phase 8 (Hyperscale Edition):**
+* **Event Streaming:** High-throughput event pipelines powered by **Apache Kafka**.
+* **Orchestration:** Self-healing auto-scaling clusters managed by **Kubernetes (K8s)**.
+* **Semantic Discovery:** Sub-millisecond full-text and AI recommendations via **Elasticsearch + Vector Search**.
+* **Distributed Consistency:** Cross-service rollback coordination using the **Saga Pattern**.
+* **Telemetry:** Full metrics and distributed tracing with **Prometheus, Grafana & OpenTelemetry**.
+
+
+
+---
+
+## 📊 Live Execution Matrix
+
+| Phase | Module | Repository | Core Stack | Status |
+| --- | --- | --- | --- | --- |
+| **01** | Core Inventory & DB | [`SmartStock-CLI-DB`](https://www.google.com/search?q=https://github.com/sourajahan/SmartStock-CLI-DB) | `Linux` `Git` `Python` `PostgreSQL` | 🟡 **In Progress** |
 | **02** | Auth & Order API | `CoreAuth-Order-API` | `Flask` `FastAPI` `SQLAlchemy` `JWT` | ⚪ Planned |
-| **03** | Storefront & Admin UI | `OmniStore-Frontend-Portal` | `React` `TypeScript` `Tailwind` | ⚪ Planned |
+| **03** | Storefront & Admin UI | `OmniStore-Frontend-Portal` | `React` `TypeScript` `Tailwind` `Query` | ⚪ Planned |
 | **04** | Search, Cache & DevOps | `SearchMedia-DevOps-Engine` | `Redis` `Docker` `GitHub Actions` | ⚪ Planned |
 | **05** | Cloud & Security | `CloudShield-Production-Gateway` | `AWS` `HTTPS` `OWASP` `CDN` | ⚪ Planned |
-| **06** | Async Queue & Scale | `AsyncQueue-Notifier-Service` | `Queue` `Load Balancer` `APIs` | ⚪ Planned |
+| **06** | Async Queue & Scale | `AsyncQueue-Notifier-Service` | `Message Queue` `Load Balancer` `APIs` | ⚪ Planned |
 | **07** | **Unified Platform** | `OmniChain-Enterprise-Platform` | `Microservices` `Kafka` `K8s` `AI Search` | 🎯 **Capstone** |
+
+---
