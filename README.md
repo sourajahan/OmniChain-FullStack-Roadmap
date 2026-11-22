@@ -1,16 +1,21 @@
-<div align="center">
+ <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=28&duration=3000&pause=1000&color=38BDF8&center=true&vCenter=true&width=850&lines=OmniChain+Enterprise+Architecture;Full-Stack+Engineering+Master+Blueprint;6+Production+Modules+%2B+1+Hyperscale+Capstone" alt="Typing SVG" />
+<!-- Animated Gradient Banner & Typing Header -->
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,50:1E3A8A,100:0284C7&height=210&section=header&text=OmniChain%20Enterprise&fontSize=48&fontColor=38BDF8&animation=fadeIn&fontAlignY=38&desc=Full-Stack%20Engineering%20Master%20Blueprint%20%7C%206%2B1%20Production%20Modules&descAlignY=62&descSize=18&descColor=E2E8F0" width="100%" />
+
+<br/>
+
+<a href="https://github.com/sourajahan/OmniChain-FullStack-Roadmap">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=22&duration=2800&pause=800&color=38BDF8&center=true&vCenter=true&width=820&lines=Building+Hyperscale+Commerce+%26+Supply+Chain+Systems;Linux+%E2%80%A2+Python+%E2%80%A2+PostgreSQL+%E2%80%A2+Flask+%E2%80%A2+FastAPI+%E2%80%A2+React;Docker+%E2%80%A2+Redis+%E2%80%A2+AWS+%E2%80%A2+Kafka+%E2%80%A2+Kubernetes+%E2%80%A2+AI+Search" alt="Typing SVG" />
+</a>
+
+<br/>
 
 <p align="center">
-  <strong>A modular, production-grade Software Engineering roadmap solving real-world distributed commerce, high-concurrency inventory, and cloud scalability challenges.</strong>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Architecture-Microservices_%26_Event--Driven-38BDF8?style=for-the-badge" alt="Architecture" />
-  <img src="https://img.shields.io/badge/Scale-Hyperscale_Ready-F59E0B?style=for-the-badge" alt="Scale" />
-  <img src="https://img.shields.io/badge/Code_Quality-Test_Coverage_%3E70%25-10B981?style=for-the-badge" alt="Coverage" />
-  <img src="https://img.shields.io/badge/Status-Active_Development-6366F1?style=for-the-badge" alt="Status" />
+  <img src="https://img.shields.io/badge/Architecture-Event--Driven_Microservices-0EA5E9?style=for-the-badge&logo=diagramsdotnet&logoColor=white" />
+  <img src="https://img.shields.io/badge/Scale-Hyperscale_Ready-F59E0B?style=for-the-badge&logo=kubernetes&logoColor=white" />
+  <img src="https://img.shields.io/badge/Test_Coverage-%3E_70%25_Pytest-10B981?style=for-the-badge&logo=pytest&logoColor=white" />
+  <img src="https://img.shields.io/badge/Security-OWASP_Top_10-EF4444?style=for-the-badge&logo=shield&logoColor=white" />
 </p>
 
 </div>
@@ -29,45 +34,35 @@ Instead of building isolated toy apps, this repository serves as the **Master Ar
 
 ---
 
-## 🏛️ High-Level System Blueprint
+## 🌈 Interactive Colored System Flowchart (Mermaid)
 
-![OmniChain Enterprise Architecture Diagram](./Gemini_Generated_Image_2gby6p2gby6p2gby.jpeg)
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1e293b', 'edgeLabelBackground':'#0f172a', 'tertiaryColor': '#1e293b'}}}%%
+flowchart TD
+    %% Styling Definitions
+    classDef frontend fill:#7c3aed,stroke:#c4b5fd,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef security fill:#059669,stroke:#6ee7b7,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef backend fill:#2563eb,stroke:#93c5fd,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef search fill:#d97706,stroke:#fcd34d,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef database fill:#0284c7,stroke:#7dd3fc,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef queue fill:#db2777,stroke:#f9a8d4,stroke-width:2px,color:#ffffff,font-weight:bold;
+    classDef capstone fill:#dc2626,stroke:#fca5a5,stroke-width:3px,color:#ffffff,font-weight:bold;
+    classDef hyperscale fill:#111827,stroke:#f59e0b,stroke-width:3px,color:#fbbf24,font-weight:bold;
 
-```text
-                  ┌──────────────────────────────────────────┐
-                  │   MODULE 3: Modern Type-Safe Frontend    │
-                  │   (React • TypeScript • Tailwind • Query) │
-                  └────────────────────┬─────────────────────┘
-                                       │ HTTPS / REST
-                                       ▼
-                  ┌──────────────────────────────────────────┐
-                  │   MODULE 5: Cloud Security & Gateway     │
-                  │  (OWASP Top 10 • Rate Limiting • CDN)    │
-                  └─────────┬──────────────────────┬─────────┘
-                            │                      │
-               Auth & Logic │                      │ Fast Read / Media
-                            ▼                      ▼
-┌────────────────────────────────────┐  ┌────────────────────────────────────┐
-│  MODULE 2: Core Auth & Order API   │  │  MODULE 4: Search & DevOps Engine  │
-│ (Flask • FastAPI • JWT • RBAC)     │  │ (Redis Cache • CI/CD • Docker)     │
-└───────────────────────────┬────────┘  └──────────┬─────────────────────────┘
-                            │                      │
-                            └──────────┬───────────┘
-                                       │ ACID Transactions
-                                       ▼
-                  ┌──────────────────────────────────────────┐
-                  │   MODULE 1: Core Inventory & DB Engine   │
-                  │  (PostgreSQL • Indexing • EXPLAIN • CLI) │
-                  └────────────────────┬─────────────────────┘
-                                       │ Async Events
-                                       ▼
-                  ┌──────────────────────────────────────────┐
-                  │   MODULE 6: Distributed Queue & Workers  │
-                  │  (Message Queue • Load Balancer • APIs)  │
-                  └────────────────────┬─────────────────────┘
-                                       │
-                                       ▼
-================================================================================
-🚀 PROJECT 7 & PHASE 8: OMNICHAIN ENTERPRISE PLATFORM (HYPERSCALE EDITION)
-   [ Apache Kafka • Kubernetes • Elasticsearch + AI Vector Search • Saga ]
-================================================================================
+    M3["🎨 MODULE 3: Modern Type-Safe Frontend<br/>(React • TypeScript • Tailwind • TanStack Query)"]:::frontend
+    M5["🛡️ MODULE 5: Cloud Security & Edge Gateway<br/>(HTTPS • OWASP Top 10 • Rate Limiting • CDN)"]:::security
+    M2["🔐 MODULE 2: Core Auth & Order API<br/>(Flask • FastAPI • JWT • RBAC • SQLAlchemy)"]:::backend
+    M4["⚙️ MODULE 4: High-Speed Search & DevOps<br/>(Redis Cache • Pagination • Docker • CI/CD)"]:::search
+    M1["📦 MODULE 1: Core Inventory & DB Engine<br/>(PostgreSQL • Indexing • ACID • EXPLAIN • CLI)"]:::database
+    M6["⚡ MODULE 6: Distributed Queue & Workers<br/>(Message Queue • Load Balancer • Payment/SMS)"]:::queue
+    P7["🚀 PROJECT 7: OMNICHAIN ENTERPRISE PLATFORM<br/>(Unified Microservices + API Gateway + Docker Compose)"]:::capstone
+    P8["🔥 PHASE 8: HYPERSCALE EDITION (Amazon/Google Scale)<br/>(Apache Kafka • Kubernetes • AI Vector Search • Saga • OpenTelemetry)"]:::hyperscale
+
+    M3 ==>|HTTPS / REST| M5
+    M5 ==>|Auth & Orders| M2
+    M5 ==>|Fast Search & Media| M4
+    M2 ==>|ACID Transactions| M1
+    M4 ==>|Cache Miss / Sync| M1
+    M1 ==>|Async Events| M6
+    M2 & M4 & M6 ==> P7
+    P7 ==>|Scale Out| P8
