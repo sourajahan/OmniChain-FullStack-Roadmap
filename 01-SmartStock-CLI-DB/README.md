@@ -1,16 +1,17 @@
-<div align="center">
+ <div align="center">
 
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://capsule-render.vercel.app/api?type=transparent&height=120&section=header&text=SmartStock%20CLI%20%26%20DB&fontSize=48&fontColor=F8FAFC&fontAlignY=42&desc=Module%2001%20%2F%2006%20%E2%80%94%20Foundations%2C%20Python%20Engineering%20%26%20Relational%20Commerce%20DB&descAlignY=75&descSize=16&descColor=38BDF8" />
-  <img alt="SmartStock CLI & DB" src="https://capsule-render.vercel.app/api?type=transparent&height=120&section=header&text=SmartStock%20CLI%20%26%20DB&fontSize=48&fontColor=0F172A&fontAlignY=42&desc=Module%2001%20%2F%2006%20%E2%80%94%20Foundations%2C%20Python%20Engineering%20%26%20Relational%20Commerce%20DB&descAlignY=75&descSize=16&descColor=0284C7" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://capsule-render.vercel.app/api?type=transparent&height=125&section=header&text=SmartStock%20CLI%20%26%20DB&fontSize=50&fontColor=F8FAFC&fontAlignY=40&desc=Module%2001%20%2F%2006%20%E2%80%94%20Systems%20Foundations%2C%20Python%20Engineering%20%26%20Relational%20Commerce%20Core&descAlignY=74&descSize=15&descColor=38BDF8" />
+  <img alt="SmartStock CLI & DB" src="https://capsule-render.vercel.app/api?type=transparent&height=125&section=header&text=SmartStock%20CLI%20%26%20DB&fontSize=50&fontColor=0F172A&fontAlignY=40&desc=Module%2001%20%2F%2006%20%E2%80%94%20Systems%20Foundations%2C%20Python%20Engineering%20%26%20Relational%20Commerce%20Core&descAlignY=74&descSize=15&descColor=0284C7" />
 </picture>
 
 <p>
   <a href="../README.md"><img src="https://img.shields.io/badge/⬅_OmniChain-Master_Blueprint-0F172A?style=flat-square&logo=github&logoColor=white" /></a>
-  <img src="https://img.shields.io/badge/Part_I-Technical_Foundations-0284C7?style=flat-square" />
-  <img src="https://img.shields.io/badge/Part_II-2_Python_Apps_%2B_PostgreSQL-064E3B?style=flat-square" />
+  <a href="#part-i-systems--engineering-foundations"><img src="https://img.shields.io/badge/Part_I-6_Engineering_Pillars-0284C7?style=flat-square" /></a>
+  <a href="#part-ii-production-deliverables-architecture"><img src="https://img.shields.io/badge/Part_II-2_Python_Systems_%2B_PostgreSQL-064E3B?style=flat-square" /></a>
+  <img src="https://img.shields.io/badge/Guarantee-ACID_%26_Zero_Overselling-1E3A8A?style=flat-square" />
 </p>
 
 <p>
@@ -22,66 +23,97 @@
 
 ---
 
-# Part I: Core Engineering Foundations (Concepts & Real-World Usage)
+## Executive Summary & Architectural Role
 
-## 1. Terminal & Linux Operations
-* **Filesystem Navigation & Manipulation (`cd`, `ls`, `cp`, `mv`, `rm`):** Moving across directory trees (`cd`), inspecting permissions and hidden files (`ls -la`), duplicating configs (`cp`), renaming/relocating artifacts (`mv`), and safely purging build caches (`rm -rf`).
-* **Stream Filtering & Pipelines (`grep`, `|`):** Chaining standard output (`stdout`) of one command into another (`|`) to isolate critical runtime errors or specific HTTP status codes from massive server logs (`cat app.log | grep "ERROR"`).
-* **Access Control (`chmod`, `permissions`):** Enforcing Unix read/write/execute (`rwx`) boundaries for owner, group, and public users (e.g., `chmod +x scripts/deploy.sh` or `chmod 600 .env`) to prevent unauthorized script execution or credential leaks.
-* **Environment Variables (`export`, `.env`):** Decoupling sensitive configuration (database URLs, API secrets) from source code into OS-level runtime memory (`os.getenv`), ensuring zero hardcoded secrets in version control.
+**SmartStock-CLI-DB** is the foundational transactional layer of the **OmniChain Enterprise Platform**. Before introducing web frameworks, caches, or distributed brokers, a commerce system must guarantee **data integrity, concurrency safety, and clean domain boundaries** at the operating system, language, and relational storage layers.
 
----
-
-## 2. Git & GitHub Version Control
-* **Local Lifecycle (`init`, `add`, `commit`):** Initializing tracked repositories (`git init`), staging exact changesets (`git add`), and recording atomic, descriptive snapshots (`git commit -m "feat: ..."`).
-* **Branching & Integration (`branch`, `merge`):** Isolating parallel feature development (`git checkout -b feature/db-lock`) away from production `main`, then integrating verified work back (`git merge`).
-* **Conflict Resolution (`merge conflicts`):** Manually reconciling overlapping line edits across branches by inspecting `<<<<<<<`, `=======`, and `>>>>>>>` markers and preserving valid business logic.
-* **Collaboration & Hygiene (`Pull Request`, `.gitignore`):** Reviewing diffs before merging via GitHub Pull Requests, while excluding virtual environments (`venv/`), secrets (`.env`), and OS artifacts (`.DS_Store`) via `.gitignore`.
+This specification is structured into two distinct halves:
+* **Part I (Engineering Foundations):** Deep architectural breakdown of the six core disciplines—from Linux process streams and Git workflows to Python memory structures, PostgreSQL ACID row-locking, and stateless HTTP/REST contracts.
+* **Part II (Production Deliverables):** Three integrated engineering artifacts—a **3NF PostgreSQL Store Database**, an **Object-Oriented CLI Inventory & Flash-Sale Engine**, and a **Zero-Dependency REST API Gateway** verified via Postman.
 
 ---
 
-## 3. Python Core Fundamentals
-* **Static Typing & Variables (`type`, `variable`):** Binding memory references with explicit type hints (`sku: str`, `price: Decimal`, `qty: int`) to catch type mismatches early and enforce self-documenting code.
-* **Control Flow (`if`, `for`, `while`):** Guarding business invariants with conditional branches (`if/elif/else`), iterating over database cursors (`for`), and driving interactive CLI event loops (`while`).
-* **Modular Functions (`def`, `*args`, `**kwargs`):** Encapsulating single-responsibility business logic into pure, reusable functions with clear input/output contracts.
-* **Built-in Data Structures (`list`, `dict`, `set`):** Selecting optimal structures for algorithmic efficiency—ordered sequences (`list`), $O(1)$ hash-map SKU lookups (`dict`), and deduplicated tag/category collections (`set`).
+# Part I: Systems & Engineering Foundations
 
----
-
-## 4. Practical Python Engineering
-* **File I/O & Serialization (`open`, `json`):** Reading and writing structured audit logs, inventory snapshots, and configuration payloads safely using context managers (`with open(...)`) and `json.load` / `json.dump`.
-* **Exception Handling (`try/except/raise`):** Designing a custom domain exception hierarchy (`OutOfStockError`, `InvalidSKUError`) to fail gracefully and trigger database rollbacks instead of unhandled crashes.
-* **Object-Oriented Design (`OOP`, `@dataclass`):** Modeling real-world entities (`Product`, `Order`, `OrderItem`) with clean encapsulation, immutability (`frozen=True`), and auto-generated boilerplate via `@dataclass`.
-* **Environment Isolation & Testing (`venv`, `pip`, `pytest`):** Pinning deterministic dependencies inside isolated virtual environments (`venv` + `requirements.txt`) and verifying edge cases with automated `pytest` suites.
-
----
-
-## 5. SQL & PostgreSQL Relational Engine
-* **Querying & Filtering (`SELECT`, `WHERE`):** Projecting specific columns and filtering rows using indexed predicates (`=`, `IN`, `BETWEEN`, `ILIKE`).
-* **Relational Joins & Aggregations (`JOIN`, `GROUP BY`):** Reconstructing normalized multi-table relationships (`INNER JOIN`, `LEFT JOIN`) and computing business KPIs (`SUM`, `COUNT`, `AVG`) grouped by category or date.
-* **Integrity Constraints & Indexing (`constraint`, `index`):** Enforcing data validity at the storage engine level (`PRIMARY KEY`, `FOREIGN KEY`, `UNIQUE`, `CHECK (stock >= 0)`) and accelerating read paths with `B-Tree` indexes.
-* **ACID Transactions & Query Profiling (`transaction`, `EXPLAIN`):** Guaranteeing all-or-nothing execution (`BEGIN`, `COMMIT`, `ROLLBACK`) with pessimistic row locking (`SELECT ... FOR UPDATE`) to prevent overselling, while auditing index scans via `EXPLAIN ANALYZE`.
-
----
-
-## 6. HTTP & RESTful Web Architecture
-* **Protocol Semantics (`method`, `status code`):** Mapping CRUD operations to idempotent/safe HTTP verbs (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`) and returning accurate status codes (`200 OK`, `201 Created`, `400 Bad Request`, `404 Not Found`, `409 Conflict`).
-* **Metadata & State (`header`, `cookie`):** Passing content negotiation (`Content-Type: application/json`), authorization tokens (`Authorization: Bearer ...`), and session state via HTTP headers and secure `HttpOnly` cookies.
-* **Stateless APIs & Cross-Origin Security (`REST`, `CORS`):** Designing resource-oriented endpoints (`/api/v1/products/{id}`) and configuring Cross-Origin Resource Sharing (`Access-Control-Allow-Origin`) for browser clients.
-* **API Verification (`Postman`):** Constructing automated request collections, environment variables, and assertion scripts in Postman to validate payloads, headers, and error responses.
-
----
-
-# Part II: Production Deliverables (2 Python Projects + Store Database)
-
-| Deliverable | Architecture & Purpose | Applied Stack |
+### 01. Linux Kernel Space, Shell & Process Hygiene
+| Primitive | Engineering Mechanism | Production Application in SmartStock |
 | :--- | :--- | :--- |
-| **01. Store Relational Database (`store_db`)** | Normalized 3NF PostgreSQL schema (`products`, `customers`, `orders`, `order_items`) enforcing `CHECK (stock >= 0)`, composite `B-Tree` indexes, `EXPLAIN ANALYZE` reports, and `ACID` row-locking. | `PostgreSQL` • `SQL` • `ACID` • `Indexes` |
-| **02. Project 1: SmartStock CLI Engine** | Object-oriented Python CLI application (`@dataclass`, custom exceptions, `JSON` export/import, `dict/set` $O(1)$ indexing) executing concurrent-safe stock deductions and sales analytics directly against `store_db`. | `Python OOP` • `Psycopg2` • `JSON` • `Pytest` |
-| **03. Project 2: SmartStock REST Gateway** | Lightweight HTTP/REST service exposing `store_db` over JSON endpoints (`GET /products`, `POST /orders`, `GET /reports/sales`) with proper HTTP status codes, headers, `CORS`, and a complete `Postman` test collection. | `Python HTTP/REST` • `JSON` • `CORS` • `Postman` |
+| **`cd, ls, cp, mv, rm`** | Direct inode traversal and filesystem tree manipulation (`ls -la` for hidden dotfiles, `rm -rf` for deterministic cache purges). | Managing multi-package directory trees, rotating JSON backup snapshots, and cleaning `__pycache__` artifacts. |
+| **`grep` & `\|` (Pipes)** | Unix stream redirection connecting `stdout` of one process directly to `stdin` of another in memory without temporary disk writes. | Real-time log forensics: `cat logs/audit.log \| grep "ROLLBACK" \| wc -l` to isolate failed concurrent transactions. |
+| **`chmod` & Permissions** | Octal bitmask enforcement (`rwx` for `user/group/others`) controlling execution privileges and file confidentiality. | Hardening credential files (`chmod 600 .env`) and enabling automated test/bootstrap runners (`chmod +x scripts/setup.sh`). |
+| **`Environment Variables`** | OS-level key-value injection (`export`, `.env` via `os.getenv`) separating runtime configuration from immutable source code. | Injecting `DB_HOST`, `DB_PASSWORD`, and `API_SECRET` at runtime so zero credentials ever enter Git history. |
 
 ---
 
-<div align="center">
-  <sub>Module 01 of the <a href="../README.md">OmniChain Enterprise Platform</a> • Engineered by <a href="https://github.com/sourajahan">Soura</a></sub>
-</div>
+### 02. Distributed Version Control (Git & GitHub Flow)
+| Primitive | Engineering Mechanism | Production Application in SmartStock |
+| :--- | :--- | :--- |
+| **`init, add, commit`** | Content-addressable SHA-1 object graph tracking atomic repository snapshots via staging index (`git add -p`). | Recording granular, self-contained engineering milestones using Conventional Commits (`feat:`, `fix:`, `perf:`, `test:`). |
+| **`branch` & `merge`** | Lightweight pointer isolation allowing parallel feature development without destabilizing the `main` release branch. | Isolating database schema migrations (`feat/pg-row-lock`) and REST endpoints (`feat/http-gateway`) prior to integration. |
+| **`Conflict Resolution`** | Deterministic reconciliation of overlapping AST/line mutations between `HEAD` and incoming branch pointers (`<<<<<<<` / `>>>>>>>`). | Resolving concurrent schema or model modifications cleanly while preserving all unit test assertions. |
+| **`Pull Request` & `.gitignore`** | Peer-level diff auditing before branch integration, paired with path exclusion rules preventing binary/secret pollution. | Excluding `venv/`, `.env`, `.DS_Store`, and `.pytest_cache/` while documenting architectural changes in PR descriptions. |
+
+---
+
+### 03. Python Core: Type Systems, Control Flow & Complexity
+| Primitive | Engineering Mechanism | Production Application in SmartStock |
+| :--- | :--- | :--- |
+| **`type` & `variable`** | Explicit static type annotations (`sku: str`, `unit_price: Decimal`, `qty: int`) enforcing self-documenting contracts and IDE static analysis. | Eliminating floating-point currency rounding bugs by enforcing `decimal.Decimal` across all ledger calculations. |
+| **`if, for, while`** | Deterministic branching guards, iterator protocol traversal over database cursors, and state-machine event loops. | Validating stock thresholds (`if qty <= 0`), streaming batch exports (`for row in cursor`), and driving the interactive CLI loop (`while`). |
+| **`function`** | Pure, single-responsibility callables with explicit input/output signatures and zero hidden global state mutations. | Decoupling tax/discount calculation engines and SQL query builders into composable, unit-testable units. |
+| **`list, dict, set`** | Asymptotic data structure selection: contiguous arrays (`list`), $O(1)$ hash-table indexing (`dict`), and hash-deduplicated collections (`set`). | Indexing in-memory product catalogs by `SKU` in `dict[str, Product]` for $O(1)$ lookup speed and deduplicating category tags with `set`. |
+
+---
+
+### 04. Practical Python: Domain Modeling, Persistence & Verification
+| Primitive | Engineering Mechanism | Production Application in SmartStock |
+| :--- | :--- | :--- |
+| **`file` & `JSON`** | Context-managed I/O streams (`with open(...)`) and structured serialization (`json.dumps` / `json.loads`) with custom encoders. | Exporting daily warehouse audit trails to `.json` and ingesting bulk supplier catalog updates safely. |
+| **`exception`** | Hierarchical error propagation (`try / except / else / finally`) allowing clean resource teardown and transactional rollbacks. | Raising domain-specific `OutOfStockError`, `DuplicateSKUError`, and `DatabaseConnectionError` mapped directly to HTTP status codes. |
+| **`OOP` & `@dataclass`** | Encapsulated domain entities with immutable value semantics (`@dataclass(frozen=True)`) and clear behavioral methods. | Modeling `Product`, `Customer`, `Order`, and `OrderLine` as strictly typed domain objects separate from raw SQL tuples. |
+| **`venv, pip, pytest`** | Hermetic dependency isolation per project (`venv` + `requirements.txt`) paired with fixture-driven automated verification (`pytest`). | Running isolated database rollback tests, concurrency simulations, and edge-case validation with `pytest -v`. |
+
+---
+
+### 05. SQL & PostgreSQL Relational Internals
+| Primitive | Engineering Mechanism | Production Application in SmartStock |
+| :--- | :--- | :--- |
+| **`SELECT` & `WHERE`** | Relational projection and predicate filtering leveraging sargable expressions (`=`, `IN`, `BETWEEN`) over indexed columns. | Querying low-stock SKUs (`WHERE stock_qty <= reorder_threshold`) and filtering active customer orders by timestamp range. |
+| **`JOIN` & `GROUP BY`** | Set-theoretic multi-table reconstruction (`INNER JOIN`, `LEFT JOIN`) and hash/sort aggregation (`SUM`, `COUNT`, `AVG`). | Generating executive revenue-by-category reports and identifying top-performing products across normalized tables. |
+| **`constraint` & `index`** | Storage-level invariant enforcement (`PK`, `FK`, `UNIQUE`, `CHECK`) combined with `B-Tree` balanced search trees. | Enforcing `CHECK (stock_qty >= 0)` so negative inventory is physically impossible, and indexing `orders(customer_id, created_at)`. |
+| **`transaction` & `EXPLAIN`** | All-or-nothing `ACID` execution (`BEGIN`, `COMMIT`, `ROLLBACK`) with pessimistic row locks (`FOR UPDATE`) and query plan telemetry. | Locking product rows during checkout to prevent flash-sale overselling, and auditing index scans via `EXPLAIN (ANALYZE, BUFFERS)`. |
+
+---
+
+### 06. HTTP Protocol & Stateless REST Architecture
+| Primitive | Engineering Mechanism | Production Application in SmartStock |
+| :--- | :--- | :--- |
+| **`method` & `status code`** | Uniform interface mapping (`GET`, `POST`, `PATCH`, `DELETE`) paired with exact semantic response signaling (`200`, `201`, `400`, `404`, `409`). | Returning `201 Created` with `Location` header on order placement, and `409 Conflict` when `OutOfStockError` triggers. |
+| **`header` & `cookie`** | Out-of-band metadata negotiation (`Content-Type`, `Authorization`, `X-Request-ID`) and stateful browser session tokens (`HttpOnly`, `Secure`). | Propagating correlation trace IDs (`X-Request-ID`) across logs and enforcing strict `application/json` payload contracts. |
+| **`REST` & `CORS`** | Resource-oriented URI hierarchy (`/api/v1/products/{sku}`) and preflight cross-origin access governance (`OPTIONS` + `Access-Control-*`). | Exposing clean, stateless endpoints ready for browser storefronts while blocking unauthorized cross-origin requests. |
+| **`Postman`** | Automated API test harnesses with environment variables, pre-request scripts, and JavaScript response schema assertions. | Maintaining an executable Postman collection verifying happy paths, payload validation errors, and `409` stock conflicts. |
+
+---
+
+# Part II: Production Deliverables Architecture
+
+Rather than isolated toy scripts, all concepts from **Part I** converge into **three interconnected production artifacts**:
+
+```text
+  ┌────────────────────────────────────────────────────────────────────────────────────────┐
+  │                        DELIVERABLE 03: SmartStock REST Gateway                         │
+  │   • Stateless HTTP/REST Server (GET /products, POST /orders, GET /analytics/revenue)   │
+  │   • Semantic Status Codes (200, 201, 400, 404, 409) • Headers • CORS • Postman Suite   │
+  └───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                              │ Shared Domain & Transaction Engine
+  ┌───────────────────────────────────────────▼────────────────────────────────────────────┐
+  │                        DELIVERABLE 02: SmartStock CLI Engine                           │
+  │   • Interactive Operations Terminal (Stock Intake, Flash-Sale Checkout, JSON Audit)    │
+  │   • Typed @dataclass Models • O(1) dict/set SKU Cache • Custom Exception Hierarchy     │
+  └───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                              │ Psycopg2 ACID Connection & FOR UPDATE
+  ┌───────────────────────────────────────────▼────────────────────────────────────────────┐
+  │                     DELIVERABLE 01: Store Relational Database                          │
+  │   • 3NF PostgreSQL Schema: categories, products, customers, orders, order_items        │
+  │   • Hard Constraints (CHECK stock_qty >= 0) • Composite B-Tree Indexes • EXPLAIN Plans │
+  └────────────────────────────────────────────────────────────────────────────────────────┘
