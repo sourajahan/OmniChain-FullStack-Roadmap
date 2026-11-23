@@ -1,145 +1,337 @@
  <div align="center">
 
-<!-- Reliable Vibrant Gradient Header Banner -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1E1B4B,35:1D4ED8,70:0284C7,100:059669&height=200&section=header&text=SmartStock%20CLI%20%26%20DB&fontSize=44&fontColor=FFFFFF&animation=fadeIn&fontAlignY=38&desc=Module%2001%20%2F%2006%20%E2%80%94%20Systems%20Foundations%2C%20Python%20Engineering%20%26%20Commerce%20DB&descAlignY=63&descSize=15&descColor=BAE6FD" width="100%" />
+# 📦 SmartStock
 
-<!-- Live Typing Animation -->
-<a href="../README.md">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=18&duration=2600&pause=800&color=38BDF8&center=true&vCenter=true&width=820&lines=01.+Linux+%26+Git+%E2%80%A2+02.+Python+Core+%26+OOP+%E2%80%A2+03.+PostgreSQL+ACID+%26+REST;2+Complete+Python+Applications+%2B+Normalized+Store+Database;Zero-Overselling+Concurrency+Control+with+Row-Level+Locking" alt="Typing SVG" />
-</a>
+### A transaction-safe inventory & order engine that never oversells.
 
-<br/>
+*Module 01 of 06 — [OmniChain Enterprise Platform](../README.md)*
 
-<!-- Colorful Navigation Badges -->
-<p>
-  <a href="../README.md"><img src="https://img.shields.io/badge/⬅_Master-OmniChain_Core-0F172A?style=for-the-badge&logo=github&logoColor=white" /></a>
-  <a href="#part-i-systems--engineering-foundations"><img src="https://img.shields.io/badge/Part_I-6_Engineering_Pillars-6366F1?style=for-the-badge" /></a>
-  <a href="#part-ii-production-deliverables-architecture"><img src="https://img.shields.io/badge/Part_II-2_Python_Apps_%2B_DB-10B981?style=for-the-badge" /></a>
-  <img src="https://img.shields.io/badge/Guarantee-ACID_%26_Zero_Overselling-F59E0B?style=for-the-badge" />
-</p>
-
-<!-- Tech Stack Icons -->
-<p>
-  <img src="https://skillicons.dev/icons?i=linux,git,github,py,postgres,postman&perline=6" />
-</p>
+![Status](https://img.shields.io/badge/status-in%20progress-orange)
+![Phase](https://img.shields.io/badge/phase-0%20of%205-blue)
+![Python](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/postgresql-16-4169E1?logo=postgresql&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 </div>
 
 ---
 
-## 🎯 Executive Summary & Architectural Role
+## 📑 Table of Contents
 
-**SmartStock-CLI-DB** is the foundational transactional layer of the **OmniChain Enterprise Platform**. Before introducing web frameworks, caches, or distributed brokers, a commerce system must guarantee **data integrity, concurrency safety, and clean domain boundaries** at the operating system, language, and relational storage layers.
-
-- 🟦 **Part I (Engineering Foundations):** Deep breakdown of the six core disciplines—from Linux process streams and Git workflows to Python memory structures, PostgreSQL ACID row-locking, and stateless HTTP/REST contracts.
-- 🟩 **Part II (Production Deliverables):** Three integrated engineering artifacts—a **3NF PostgreSQL Store Database**, an **Object-Oriented CLI Inventory & Flash-Sale Engine**, and a **Zero-Dependency REST API Gateway** verified via Postman.
-
----
-
-# Part I: Systems & Engineering Foundations
-
-### 🟨 01. Linux Kernel Space, Shell & Process Hygiene
-![Linux](https://img.shields.io/badge/Linux_Shell-FCC624?style=flat-square&logo=linux&logoColor=black) ![Bash](https://img.shields.io/badge/Bash_Pipes-4EAA25?style=flat-square&logo=gnubash&logoColor=white) ![Security](https://img.shields.io/badge/Env_Isolation-EF4444?style=flat-square)
-
-| Primitive | Engineering Mechanism | Production Application in SmartStock |
-| :--- | :--- | :--- |
-| **`cd, ls, cp, mv, rm`** | Direct inode traversal and filesystem tree manipulation (`ls -la` for hidden dotfiles, `rm -rf` for deterministic cache purges). | Managing multi-package directory trees, rotating JSON backup snapshots, and cleaning `__pycache__` artifacts. |
-| **`grep` & `\|` (Pipes)** | Unix stream redirection connecting `stdout` of one process directly to `stdin` of another in memory without temporary disk writes. | Real-time log forensics: `cat logs/audit.log \| grep "ROLLBACK" \| wc -l` to isolate failed concurrent transactions. |
-| **`chmod` & Permissions** | Octal bitmask enforcement (`rwx` for `user/group/others`) controlling execution privileges and file confidentiality. | Hardening credential files (`chmod 600 .env`) and enabling automated test/bootstrap runners (`chmod +x scripts/setup.sh`). |
-| **`Environment Variables`** | OS-level key-value injection (`export`, `.env` via `os.getenv`) separating runtime configuration from immutable source code. | Injecting `DB_HOST`, `DB_PASSWORD`, and `API_SECRET` at runtime so zero credentials ever enter Git history. |
+- [The Problem](#-the-problem)
+- [The Solution](#-the-solution)
+- [Proof: Benchmark Plan](#-proof-benchmark-plan)
+- [Quickstart](#-quickstart)
+- [Architecture](#-architecture)
+- [Data Model](#-data-model)
+- [API Overview](#-api-overview)
+- [Project Structure](#-project-structure)
+- [Roadmap](#-roadmap)
+- [Engineering Principles](#-engineering-principles)
+- [Engineering Foundations](#-engineering-foundations)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ---
 
-### 🟧 02. Distributed Version Control (Git & GitHub Flow)
-![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub_PRs-181717?style=flat-square&logo=github&logoColor=white) ![Workflow](https://img.shields.io/badge/Feature_Branching-8B5CF6?style=flat-square)
+## 🔥 The Problem
 
-| Primitive | Engineering Mechanism | Production Application in SmartStock |
-| :--- | :--- | :--- |
-| **`init, add, commit`** | Content-addressable SHA-1 object graph tracking atomic repository snapshots via staging index (`git add -p`). | Recording granular, self-contained engineering milestones using Conventional Commits (`feat:`, `fix:`, `perf:`, `test:`). |
-| **`branch` & `merge`** | Lightweight pointer isolation allowing parallel feature development without destabilizing the `main` release branch. | Isolating database schema migrations (`feat/pg-row-lock`) and REST endpoints (`feat/http-gateway`) prior to integration. |
-| **`Conflict Resolution`** | Deterministic reconciliation of overlapping AST/line mutations between `HEAD` and incoming branch pointers (`<<<<<<<` / `>>>>>>>`). | Resolving concurrent schema or model modifications cleanly while preserving all unit test assertions. |
-| **`Pull Request` & `.gitignore`** | Peer-level diff auditing before branch integration, paired with path exclusion rules preventing binary/secret pollution. | Excluding `venv/`, `.env`, `.DS_Store`, and `.pytest_cache/` while documenting architectural changes in PR descriptions. |
+During high-traffic events (flash sales, Black Friday, limited drops), thousands of users press **"Place Order"** within the same second. A naive `read stock → check → write stock` flow lets many concurrent requests all see `stock = 1` and all succeed.
+
+The result: **overselling**, forced cancellations, refunds, and lost customer trust.
+
+```mermaid
+sequenceDiagram
+    participant A as Request A
+    participant B as Request B
+    participant DB as Database (stock = 1)
+    A->>DB: read stock → 1
+    B->>DB: read stock → 1
+    A->>DB: write stock = 0 ✅
+    B->>DB: write stock = 0 ✅ (should have failed!)
+    Note over A,B: 2 orders accepted, only 1 item in stock
+```
+
+## 🛡️ The Solution
+
+SmartStock enforces correctness at **multiple independent layers**, so a bug in one layer cannot corrupt inventory.
+
+| # | Layer | Mechanism | Guarantees |
+|---|-------|-----------|------------|
+| 1 | **Concurrency control** | Conditional atomic `UPDATE ... WHERE qty_stock >= :n RETURNING` *or* `SELECT ... FOR UPDATE` (swappable strategies) | No two requests can consume the same unit |
+| 2 | **Storage invariant** | `CHECK (qty_stock >= 0)` | Negative stock is physically impossible, even with an application bug |
+| 3 | **Idempotency** | `Idempotency-Key` header + `UNIQUE` key table | Retries and double-clicks never create duplicate orders |
+| 4 | **Audit ledger** | Append-only `stock_movements` table | Every change is traceable; stock can be reconciled at any time |
+| 5 | **Reservations** | Time-limited stock holds (`expires_at`) | Abandoned carts never lock stock forever |
+
+> **Source of truth:** PostgreSQL is the only authority on stock levels. The in-memory `dict`/`set` cache is used **only** for O(1) SKU lookup and static product metadata, never for stock decisions.
+
+Additional safeguards: money is always `NUMERIC(12,2)` / `Decimal` (never `float`), all queries are parameterized, and row locks are acquired in a fixed order (`product_id` ascending) to prevent deadlocks, with retry and exponential backoff on `deadlock_detected` / `serialization_failure`.
+
+## 📊 Proof: Benchmark Plan
+
+> ⚠️ **Status: pending.** The numbers below are the acceptance targets, not yet measured results. This table will be replaced with real data when Phase 5 is complete.
+
+**Scenario:** 5,000 concurrent order requests for a product with stock = 10.
+
+| Strategy | Expected successes | Expected rejections | Final stock | Oversold? |
+|----------|-------------------:|--------------------:|------------:|:---------:|
+| No locking (control) | > 10 | < 4,990 | < 0 or inconsistent | ❌ Yes (proves the test is valid) |
+| `SELECT ... FOR UPDATE` | 10 | 4,990 | 0 | ✅ No |
+| Atomic conditional `UPDATE` | 10 | 4,990 | 0 | ✅ No |
+
+Reproduce (after Phase 1):
+
+```bash
+make bench
+```
+
+## 🚀 Quickstart
+
+> ⚠️ Commands below become available as phases are completed. See the [Roadmap](#-roadmap).
+
+**Prerequisites:** Python 3.12, Docker, GNU Make
+
+```bash
+# 1. Clone
+git clone https://github.com/<your-username>/OmniChain-FullStack-Roadmap.git
+cd OmniChain-FullStack-Roadmap/01-SmartStock-CLI-DB
+
+# 2. Configure environment (never commit .env)
+cp .env.example .env
+chmod 600 .env
+
+# 3. Start PostgreSQL 16 and apply migrations
+make up
+make migrate
+
+# 4. Run tests (unit + integration + concurrency)
+make test
+```
+
+**CLI usage (planned):**
+
+```bash
+smartstock add-product --sku KB-001 --name "Keyboard" --price 49.90 --stock 10
+smartstock stock KB-001
+smartstock order --customer 1 --item KB-001:2 --idempotency-key 7f3a...
+smartstock report --from 2026-01-01 --to 2026-12-31
+smartstock backup --out backups/
+smartstock restore --file backups/2026-11-23.json
+```
+
+## 🏗️ Architecture
+
+Clean / Hexagonal layering. **Dependencies point inward only.**
+
+```mermaid
+flowchart TD
+    CLI[CLI - typer] --> S
+    API[REST API - FastAPI] --> S
+    S[Service layer<br/>orders, reservations, retries] --> D[Domain<br/>entities, errors, rules]
+    S --> R[Repository layer<br/>psycopg 3]
+    R --> PG[(PostgreSQL 16)]
+    S --> I[Infra<br/>config, logging, metrics]
+```
+
+| Layer | Responsibility |
+|-------|----------------|
+| `domain` | `@dataclass(frozen=True)` entities, value objects, domain errors (`OutOfStockError`, `DuplicateRequestError`, `ReservationExpiredError`) |
+| `repository` | SQL access only, no business rules |
+| `service` | Transactions, concurrency strategies, idempotency, reservations |
+| `api` / `cli` | Thin adapters that only call the service layer |
+| `infra` | Settings (`.env`), structured JSON logging with `correlation_id`, Prometheus metrics |
+
+## 🗄️ Data Model
+
+Normalized to **3NF**. Schema changes happen **only through Alembic migrations**.
+
+```mermaid
+erDiagram
+    categories ||--o{ products : contains
+    customers ||--o{ orders : places
+    orders ||--|{ order_items : has
+    products ||--o{ order_items : "sold as"
+    products ||--o{ stock_movements : "tracked by"
+    products ||--o{ stock_reservations : "held by"
+    orders ||--o| idempotency_keys : "protected by"
+```
+
+| Table | Key constraints |
+|-------|-----------------|
+| `categories` | `UNIQUE(name)` |
+| `products` | `UNIQUE(sku)`, `CHECK(qty_stock >= 0)`, `CHECK(price >= 0)`, `version` column |
+| `customers` | `UNIQUE(email)` |
+| `orders` | status enum, `total NUMERIC(12,2)` |
+| `order_items` | `CHECK(quantity > 0)`, price snapshot at purchase time |
+| `stock_movements` | Append-only (UPDATE/DELETE blocked); type: `SALE`, `RETURN`, `ADJUST`, `RESERVE`, `RELEASE` |
+| `stock_reservations` | `expires_at`, status: `ACTIVE` / `CONFIRMED` / `EXPIRED` |
+| `idempotency_keys` | `UNIQUE(key)`, request hash, stored response |
+
+**Reconciliation invariant:** `initial_stock + SUM(movements) = qty_stock` for every product.
+
+## 🌐 API Overview
+
+Base path: `/api/v1`. Interactive docs are auto-generated at `/docs` (OpenAPI).
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/products` | List products (pagination + filters) |
+| `GET` | `/products/{sku}` | Product details |
+| `POST` | `/orders` | Place order (**requires** `Idempotency-Key` header) |
+| `POST` | `/reservations` | Reserve stock for a limited time |
+| `GET` | `/sales/reports` | Sales analytics |
+| `GET` | `/health` | Liveness / readiness |
+| `GET` | `/metrics` | Prometheus metrics |
+
+| Code | Meaning |
+|------|---------|
+| `201` | Order created (with `Location` header) |
+| `404` | Product or resource not found |
+| `409` | Insufficient stock / conflict |
+| `422` | Invalid input or idempotency key reused with a different body |
+| `429` | Rate limit exceeded |
+
+Errors follow **RFC 7807** (`application/problem+json`). A Postman collection is provided in `postman/` and runs in CI via Newman.
+
+## 📁 Project Structure
+
+```text
+01-SmartStock-CLI-DB/
+├── src/smartstock/
+│   ├── domain/
+│   ├── repository/
+│   ├── service/
+│   ├── api/
+│   └── infra/
+├── migrations/              # Alembic
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── concurrency/
+├── benchmarks/
+├── docs/
+│   ├── ARCHITECTURE.md
+│   └── adr/                 # Architecture Decision Records
+├── postman/
+├── scripts/
+├── .github/workflows/ci.yml
+├── docker-compose.yml
+├── Makefile
+├── pyproject.toml
+├── .env.example
+└── README.md
+```
+
+## 🗺️ Roadmap
+
+- [ ] **Phase 0 — Foundations:** repo hygiene, `pyproject.toml`, lint/type tools, `docker-compose`, `Makefile`
+- [ ] **Phase 1 — Transaction core:** schema + Alembic, `FOR UPDATE` and atomic `UPDATE` strategies, deadlock retry, 5,000-request concurrency test, `EXPLAIN` analysis
+- [ ] **Phase 2 — Safety features:** idempotency keys, append-only ledger, reservations with expiry job, reconciliation test
+- [ ] **Phase 3 — Interfaces:** CLI (JSON backup/restore), FastAPI REST, auth, rate limiting, CORS, Postman collection
+- [ ] **Phase 4 — Quality:** GitHub Actions CI, ≥ 90% coverage on domain/service, structured logs, Prometheus metrics, dependency and secret scanning
+- [ ] **Phase 5 — Proof & docs:** benchmark report, ADRs, final documentation
+
+## 📐 Engineering Principles
+
+1. **PostgreSQL is the single source of truth** for stock.
+2. **Money is never a float.** `NUMERIC(12,2)` in the database, `Decimal` in Python.
+3. **All SQL is parameterized.** No string-built queries.
+4. **No secrets in Git.** Configuration via environment variables; `.env` is `chmod 600` and git-ignored.
+5. **Every claim is backed by a test or a reproducible benchmark.**
+6. **Least privilege:** the application DB role cannot `DROP` or `ALTER`.
+
+## 🧰 Engineering Foundations
+
+The skills this module is designed to exercise, and where each is applied.
+
+<details>
+<summary><b>🟨 Linux, Shell & Environment</b></summary>
+
+| Primitive | Application in SmartStock |
+|-----------|---------------------------|
+| `cd`, `ls`, `cp`, `mv`, `rm` | Managing the project tree, rotating JSON backups, cleaning `__pycache__` |
+| `grep` and pipes `\|` | Log forensics, e.g. `grep "ROLLBACK" logs/audit.log \| wc -l` |
+| `chmod` | `chmod 600 .env`, `chmod +x scripts/setup.sh` |
+| Environment variables | `DB_HOST`, `DB_PASSWORD`, `API_SECRET` injected at runtime, never committed |
+
+</details>
+
+<details>
+<summary><b>🟧 Git & GitHub Flow</b></summary>
+
+| Primitive | Application in SmartStock |
+|-----------|---------------------------|
+| `init`, `add`, `commit` | Small atomic commits using Conventional Commits (`feat:`, `fix:`, `perf:`, `test:`) |
+| `branch`, `merge` | Feature isolation, e.g. `feat/pg-row-lock`, `feat/http-gateway` |
+| Conflict resolution | Reconciling concurrent schema/model changes while keeping tests green |
+| Pull Request, `.gitignore` | Reviewed merges; excluding `venv/`, `.env`, `.pytest_cache/` |
+
+</details>
+
+<details>
+<summary><b>🟦 Python Core</b></summary>
+
+| Primitive | Application in SmartStock |
+|-----------|---------------------------|
+| Types & variables | Explicit annotations; `Decimal` for all currency |
+| `if` / `for` / `while` | Stock validation, cursor streaming, interactive CLI loop |
+| Functions | Small, pure, unit-testable (pricing, discounts, query builders) |
+| `list`, `dict`, `set` | O(1) SKU lookup via `dict[str, Product]`, tag deduplication via `set` |
+
+</details>
+
+<details>
+<summary><b>🟪 Practical Python</b></summary>
+
+| Primitive | Application in SmartStock |
+|-----------|---------------------------|
+| File & JSON | Backup/restore with schema validation before import |
+| Exceptions | `OutOfStockError`, `DuplicateSKUError`, `DatabaseConnectionError` mapped to HTTP codes |
+| OOP & `@dataclass` | `Product`, `Customer`, `Order`, `OrderLine` as typed domain objects |
+| `venv`, `pip`, `pytest` | Isolated environment, fixtures, concurrency and rollback tests |
+
+</details>
+
+<details>
+<summary><b>🩵 SQL & PostgreSQL</b></summary>
+
+| Primitive | Application in SmartStock |
+|-----------|---------------------------|
+| `SELECT` / `WHERE` | Low-stock queries, date-range order filters |
+| `JOIN` / `GROUP BY` | Revenue by category, top products |
+| Constraints & indexes | `CHECK`, `UNIQUE`, FKs, B-Tree and composite indexes |
+| Transactions & `EXPLAIN` | `FOR UPDATE`, isolation levels, `EXPLAIN (ANALYZE, BUFFERS)` |
+
+</details>
+
+<details>
+<summary><b>🩷 HTTP & REST</b></summary>
+
+| Primitive | Application in SmartStock |
+|-----------|---------------------------|
+| Methods & status codes | `201` + `Location` on create, `409` on stock conflict |
+| Headers | `Idempotency-Key`, `X-Request-ID` correlation, strict `Content-Type` |
+| REST & CORS | Versioned resources, explicit origin allow-list (no `*`) |
+| Postman | Executable collection covering happy path, validation errors, `409` |
+
+</details>
+
+## 🤝 Contributing
+
+1. Create a branch: `git checkout -b feat/your-feature`
+2. Commit using [Conventional Commits](https://www.conventionalcommits.org/)
+3. Make sure `make lint` and `make test` pass
+4. Open a Pull Request describing *what* changed and *why*
+
+## 📄 License
+
+Released under the [MIT License](LICENSE).
 
 ---
-
-### 🟦 03. Python Core: Type Systems, Control Flow & Complexity
-![Python](https://img.shields.io/badge/Python_3.12+-3776AB?style=flat-square&logo=python&logoColor=white) ![Typing](https://img.shields.io/badge/Static_Typing-0284C7?style=flat-square) ![Big-O](https://img.shields.io/badge/O(1)_Lookups-10B981?style=flat-square)
-
-| Primitive | Engineering Mechanism | Production Application in SmartStock |
-| :--- | :--- | :--- |
-| **`type` & `variable`** | Explicit static type annotations (`sku: str`, `unit_price: Decimal`, `qty: int`) enforcing self-documenting contracts and IDE static analysis. | Eliminating floating-point currency rounding bugs by enforcing `decimal.Decimal` across all ledger calculations. |
-| **`if, for, while`** | Deterministic branching guards, iterator protocol traversal over database cursors, and state-machine event loops. | Validating stock thresholds (`if qty <= 0`), streaming batch exports (`for row in cursor`), and driving the interactive CLI loop (`while`). |
-| **`function`** | Pure, single-responsibility callables with explicit input/output signatures and zero hidden global state mutations. | Decoupling tax/discount calculation engines and SQL query builders into composable, unit-testable units. |
-| **`list, dict, set`** | Asymptotic data structure selection: contiguous arrays (`list`), $O(1)$ hash-table indexing (`dict`), and hash-deduplicated collections (`set`). | Indexing in-memory product catalogs by `SKU` in `dict[str, Product]` for $O(1)$ lookup speed and deduplicating category tags with `set`. |
-
----
-
-### 🟪 04. Practical Python: Domain Modeling, Persistence & Verification
-![OOP](https://img.shields.io/badge/OOP_%26_Dataclasses-7C3AED?style=flat-square) ![JSON](https://img.shields.io/badge/JSON_%26_File_I%2FO-F59E0B?style=flat-square) ![Pytest](https://img.shields.io/badge/Pytest_Verified-0A9EDC?style=flat-square&logo=pytest&logoColor=white)
-
-| Primitive | Engineering Mechanism | Production Application in SmartStock |
-| :--- | :--- | :--- |
-| **`file` & `JSON`** | Context-managed I/O streams (`with open(...)`) and structured serialization (`json.dumps` / `json.loads`) with custom encoders. | Exporting daily warehouse audit trails to `.json` and ingesting bulk supplier catalog updates safely. |
-| **`exception`** | Hierarchical error propagation (`try / except / else / finally`) allowing clean resource teardown and transactional rollbacks. | Raising domain-specific `OutOfStockError`, `DuplicateSKUError`, and `DatabaseConnectionError` mapped directly to HTTP status codes. |
-| **`OOP` & `@dataclass`** | Encapsulated domain entities with immutable value semantics (`@dataclass(frozen=True)`) and clear behavioral methods. | Modeling `Product`, `Customer`, `Order`, and `OrderLine` as strictly typed domain objects separate from raw SQL tuples. |
-| **`venv, pip, pytest`** | Hermetic dependency isolation per project (`venv` + `requirements.txt`) paired with fixture-driven automated verification (`pytest`). | Running isolated database rollback tests, concurrency simulations, and edge-case validation with `pytest -v`. |
-
----
-
-### 🩵 05. SQL & PostgreSQL Relational Internals
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL_16-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![ACID](https://img.shields.io/badge/ACID_Transactions-059669?style=flat-square) ![Indexing](https://img.shields.io/badge/B--Tree_%26_EXPLAIN-0EA5E9?style=flat-square)
-
-| Primitive | Engineering Mechanism | Production Application in SmartStock |
-| :--- | :--- | :--- |
-| **`SELECT` & `WHERE`** | Relational projection and predicate filtering leveraging sargable expressions (`=`, `IN`, `BETWEEN`) over indexed columns. | Querying low-stock SKUs (`WHERE stock_qty <= reorder_threshold`) and filtering active customer orders by timestamp range. |
-| **`JOIN` & `GROUP BY`** | Set-theoretic multi-table reconstruction (`INNER JOIN`, `LEFT JOIN`) and hash/sort aggregation (`SUM`, `COUNT`, `AVG`). | Generating executive revenue-by-category reports and identifying top-performing products across normalized tables. |
-| **`constraint` & `index`** | Storage-level invariant enforcement (`PK`, `FK`, `UNIQUE`, `CHECK`) combined with `B-Tree` balanced search trees. | Enforcing `CHECK (stock_qty >= 0)` so negative inventory is physically impossible, and indexing `orders(customer_id, created_at)`. |
-| **`transaction` & `EXPLAIN`** | All-or-nothing `ACID` execution (`BEGIN`, `COMMIT`, `ROLLBACK`) with pessimistic row locks (`FOR UPDATE`) and query plan telemetry. | Locking product rows during checkout to prevent flash-sale overselling, and auditing index scans via `EXPLAIN (ANALYZE, BUFFERS)`. |
-
----
-
-### 🩷 06. HTTP Protocol & Stateless REST Architecture
-![REST](https://img.shields.io/badge/RESTful_HTTP-EC4899?style=flat-square) ![CORS](https://img.shields.io/badge/CORS_Security-DC2626?style=flat-square) ![Postman](https://img.shields.io/badge/Postman_Collection-FF6C37?style=flat-square&logo=postman&logoColor=white)
-
-| Primitive | Engineering Mechanism | Production Application in SmartStock |
-| :--- | :--- | :--- |
-| **`method` & `status code`** | Uniform interface mapping (`GET`, `POST`, `PATCH`, `DELETE`) paired with exact semantic response signaling (`200`, `201`, `400`, `404`, `409`). | Returning `201 Created` with `Location` header on order placement, and `409 Conflict` when `OutOfStockError` triggers. |
-| **`header` & `cookie`** | Out-of-band metadata negotiation (`Content-Type`, `Authorization`, `X-Request-ID`) and stateful browser session tokens (`HttpOnly`, `Secure`). | Propagating correlation trace IDs (`X-Request-ID`) across logs and enforcing strict `application/json` payload contracts. |
-| **`REST` & `CORS`** | Resource-oriented URI hierarchy (`/api/v1/products/{sku}`) and preflight cross-origin access governance (`OPTIONS` + `Access-Control-*`). | Exposing clean, stateless endpoints ready for browser storefronts while blocking unauthorized cross-origin requests. |
-| **`Postman`** | Automated API test harnesses with environment variables, pre-request scripts, and JavaScript response schema assertions. | Maintaining an executable Postman collection verifying happy paths, payload validation errors, and `409` stock conflicts. |
-
----
-
-# 🚀 Part II: Production Deliverables Architecture
 
 <div align="center">
 
-<img src="https://img.shields.io/badge/TOPOLOGY-3--TIER_MODULAR_SYSTEM-0F172A?style=for-the-badge&logo=diagramsdotnet&logoColor=38BDF8" />
-<img src="https://img.shields.io/badge/CONCURRENCY-ACID_%2B_ROW--LEVEL_LOCKING-064E3B?style=for-the-badge&logo=postgresql&logoColor=34D399" />
-<img src="https://img.shields.io/badge/DELIVERABLES-2_PYTHON_SYSTEMS_%2B_POSTGRES_DB-4C1D95?style=for-the-badge&logo=python&logoColor=FACC15" />
+**Part of the OmniChain Enterprise Platform** · Module 01 of 06
 
 </div>
-
-<br/>
-
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'background': '#0B0F19', 'primaryTextColor': '#FFFFFF', 'lineColor': '#38BDF8', 'fontFamily': 'JetBrains Mono, Fira Code, monospace'}}}%%
-flowchart TB
-    classDef gateway fill:#831843,stroke:#F472B6,stroke-width:2.5px,color:#FFFFFF,rx:12,ry:12;
-    classDef cli fill:#1E3A8A,stroke:#60A5FA,stroke-width:2.5px,color:#FFFFFF,rx:12,ry:12;
-    classDef db fill:#0C4A6E,stroke:#38BDF8,stroke-width:3px,color:#FFFFFF,rx:14,ry:14;
-
-    subgraph L3 ["🌐 TIER 3 — STATELESS HTTP & REST INTERFACE"]
-        GW["🔌 <b>DELIVERABLE 03: SmartStock REST Gateway</b> (<code>src/api_gateway/</code>)<br/>GET /products • POST /orders • GET /reports/sales<br/>Status Codes (200/201/400/404/409) • Custom Headers • Cookies • CORS • Postman"]:::gateway
-    end
-
-    subgraph L2 ["🖥️ TIER 2 — TERMINAL OPERATIONS & TYPED DOMAIN ENGINE"]
-        CLI["⚡ <b>DELIVERABLE 02: SmartStock CLI Engine</b> (<code>src/cli_app/</code>)<br/>Stock Intake • Flash-Sale Checkout • JSON Snapshots • Grep Audit Logs<br/>@dataclass Entities • O(1) dict/set SKU Index • OutOfStockError • Pytest"]:::cli
-    end
-
-    subgraph L1 ["🗄️ TIER 1 — RELATIONAL ACID PERSISTENCE CORE"]
-        DB[("💎 <b>DELIVERABLE 01: Store Relational Database</b> (<code>sql/</code>)<br/>PostgreSQL 16 • 3NF Schema (categories, products, customers, orders, order_items)<br/>CHECK (stock_qty >= 0) • Composite B-Tree Indexes • EXPLAIN ANALYZE")]:::db
-    end
-
-    GW ==>|"REST / JSON Payloads"| CLI
-    CLI ==>|"Psycopg2 ACID Transaction + SELECT ... FOR UPDATE"| DB
