@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+src/smartstock/__init__.py
+src/smartstock.egg-info/PKG-INFO
+src/smartstock.egg-info/SOURCES.txt
+src/smartstock.egg-info/dependency_links.txt
+src/smartstock.egg-info/requires.txt
+src/smartstock.egg-info/top_level.txt
+src/smartstock/api/__init__.py
+src/smartstock/domain/__init__.py
+src/smartstock/infra/__init__.py
+src/smartstock/repository/__init__.py
+src/smartstock/service/__init__.py
