@@ -16,3 +16,15 @@ class InvalidRefreshTokenError(DomainError):
 
 class TokenReuseDetectedError(DomainError):
     """Raised when a revoked refresh token is reused (replay attack)."""
+
+
+class OrderNotFoundError(DomainError):
+    """Raised when an order does not exist."""
+
+
+class OrderAccessDeniedError(DomainError):
+    """Raised when a user tries to access an order they do not own (IDOR protection)."""
+
+
+class InvalidOrderTransitionError(DomainError):
+    """Raised when an invalid order status transition is attempted."""
