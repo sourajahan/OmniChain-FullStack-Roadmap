@@ -1,0 +1,13 @@
+pyproject.toml
+src/coreauth/__init__.py
+src/coreauth.egg-info/PKG-INFO
+src/coreauth.egg-info/SOURCES.txt
+src/coreauth.egg-info/dependency_links.txt
+src/coreauth.egg-info/requires.txt
+src/coreauth.egg-info/top_level.txt
+src/coreauth/api/__init__.py
+src/coreauth/core/__init__.py
+src/coreauth/domain/__init__.py
+src/coreauth/infra/__init__.py
+src/coreauth/repository/__init__.py
+src/coreauth/service/__init__.py
