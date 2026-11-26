@@ -1,3 +1,4 @@
+import time
 from collections.abc import Awaitable, Callable
 from uuid import uuid4
 
@@ -11,6 +12,7 @@ from slowapi.util import get_remote_address
 
 from coreauth.api.routes_auth import router as auth_router
 from coreauth.api.routes_orders import router as orders_router
+from coreauth.core.logging import logger
 
 limiter = Limiter(key_func=get_remote_address)
 
@@ -37,10 +39,24 @@ async def security_and_correlation_middleware(
 ) -> Response:
     correlation_id = request.headers.get("X-Request-ID") or uuid4().hex
     request.state.correlation_id = correlation_id
+    start = time.perf_counter()
     response = await call_next(request)
+    duration_ms = round((time.perf_counter() - start) * 1000, 2)
     response.headers["X-Request-ID"] = correlation_id
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "DENY"
+    logger.info(
+        "http_request",
+        extra={
+            "extra_fields": {
+                "correlation_id": correlation_id,
+                "method": request.method,
+                "path": request.url.path,
+                "status_code": response.status_code,
+                "duration_ms": duration_ms,
+            }
+        },
+    )
     return response
 
 
