@@ -1,54 +1,110 @@
 <div align="center">
   <img src="./.github/assets/banner.svg" alt="OmniChain Enterprise Platform" width="100%" />
 
-  <h1>OmniChain — Full-Stack & Hyperscale Enterprise Roadmap</h1>
+  <h1>⚡ OmniChain — Full-Stack &amp; Hyperscale Enterprise Roadmap</h1>
   <p>
-    <strong>An end-to-end, production-grade software engineering monorepo spanning 8 progressive modules — from ACID inventory engines to Multi-Region Kubernetes, Kafka, AI Vector Search, and Distributed Sagas.</strong>
+    <strong>From ACID inventory engines to Multi-Region Kubernetes, Apache Kafka, AI Vector Search, and Distributed Sagas — built as 8 progressive, production-tested modules.</strong>
   </p>
 
   <p>
-    <a href="#-roadmap-modules-0108"><img src="[https://img.shields.io/badge/Modules-8%2F8%20Complete-10B981?style=for-the-badge](https://img.shields.io/badge/Modules-8%2F8%20Complete-10B981?style=for-the-badge)" alt="Modules 8/8" /></a>
-    <a href="[https://github.com/sourajahan/OmniChain-FullStack-Roadmap/releases/tag/v2.0.0](https://github.com/sourajahan/OmniChain-FullStack-Roadmap/releases/tag/v2.0.0)"><img src="[https://img.shields.io/badge/Release-v2.0.0-0284C7?style=for-the-badge](https://img.shields.io/badge/Release-v2.0.0-0284C7?style=for-the-badge)" alt="Release v2.0.0" /></a>
-    <img src="[https://img.shields.io/badge/Architecture-Event--Driven%20%26%20Hyperscale-6366F1?style=for-the-badge](https://img.shields.io/badge/Architecture-Event--Driven%20%26%20Hyperscale-6366F1?style=for-the-badge)" alt="Architecture" />
-    <img src="[https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-1E293B?style=for-the-badge&logo=githubactions](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-1E293B?style=for-the-badge&logo=githubactions)" alt="CI/CD" />
+    <img src="./.github/assets/badges.svg" alt="Modules 8/8 | Release v2.0.0 | Hyperscale | GitHub Actions" width="760" />
   </p>
 
   <p>
-    <a href="#-architecture-overview">Architecture</a> •
+    <a href="#-system-architecture">Architecture</a> •
+    <a href="#-distributed-saga--compensation-flow">Saga Flow</a> •
     <a href="#-roadmap-modules-0108">Modules (01–08)</a> •
     <a href="#-tech-stack">Tech Stack</a> •
     <a href="#-quick-start">Quick Start</a> •
     <a href="#-architecture-decision-records-adrs">ADRs</a>
   </p>
+
+  <br/>
+  <img src="./.github/assets/highlights.svg" alt="OmniChain Key Highlights" width="840" />
 </div>
 
 ---
 
-## ✨ Why OmniChain?
-
-Modern enterprise platforms demand more than isolated CRUD services. **OmniChain** demonstrates how to design, test, containerize, and scale a complete commerce and cloud logistics ecosystem with real-world engineering patterns:
-
-- **Idempotency & Fault Isolation:** Deduplicated APIs (`Idempotency-Key`), Redis async queues, worker retries, and Dead-Letter Queues (DLQ).
-- **Distributed Consistency:** Multi-warehouse inventory reservation, Saga-ready orchestration, and automatic compensating rollbacks on payment/logistics failures.
-- **Hyperscale Readiness:** Cosine-similarity AI Vector Search, Apache Kafka (KRaft) event envelopes, Prometheus `/metrics`, W3C `traceparent` tracing, and Multi-Region Kubernetes (`eu-west-1` / `us-east-1`) with zero-downtime `RollingUpdate` and HPA.
-- **Automated Quality Gates:** Every module ships with `pytest` suites, `ruff` linting, Docker Compose stacks, and dedicated GitHub Actions CI workflows.
-
----
-
-## 🏗️ Architecture Overview
+## 🏗️ System Architecture
 
 ```mermaid
 flowchart TB
-    Portal["03 OmniStore Portal<br/>React + TypeScript + Tailwind"] --> Shield["05 CloudShield Gateway<br/>TLS + Rate Limit + OWASP"]
-    Shield --> Auth["02 CoreAuth & Order API<br/>FastAPI + JWT + RBAC"]
-    Shield --> Search["04 Search & Media Engine<br/>Redis Cache + DevOps"]
-    Shield --> LB["06 Nginx Load Balancer<br/>least_conn"]
-    LB --> Queue["06 Async Queue & Workers<br/>Redis + Retries + DLQ"]
-    Auth --> Core["07 OmniChain Enterprise Core<br/>Multi-Warehouse + Cloud Logistics"]
-    Core --> Hyper["08 Hyperscale Platform<br/>AI Vector Search + Distributed Saga"]
-    Hyper --> Kafka[("Apache Kafka KRaft")]
-    Hyper --> K8s["Kubernetes HPA + PDB<br/>eu-west-1 & us-east-1"]
-    Hyper --> Obs["Observability Stack<br/>Prometheus + Grafana + OpenTelemetry"]
+    subgraph EDGE["🌐 Edge, Portal & Security Layer"]
+        direction LR
+        Portal["03 OmniStore Portal<br/>React + TypeScript + Tailwind"]
+        Shield["05 CloudShield Gateway<br/>TLS + Rate Limit + OWASP"]
+        Portal --> Shield
+    end
+
+    subgraph CORE["⚙️ Core Commerce & Cloud Logistics"]
+        direction LR
+        Auth["02 CoreAuth & Order API<br/>FastAPI + JWT + RBAC"]
+        Search["04 Search & Media Engine<br/>Redis Cache + DevOps"]
+        Enterprise["07 OmniChain Enterprise Core<br/>Multi-Warehouse + Logistics"]
+        Auth --> Enterprise
+    end
+
+    subgraph ASYNC["⚡ Async Messaging & Load Balancing"]
+        direction LR
+        LB["06 Nginx Load Balancer<br/>least_conn"]
+        Queue["06 Async Queue & Workers<br/>Redis + Idempotency + DLQ"]
+        LB --> Queue
+    end
+
+    subgraph HYPER["🚀 Hyperscale, AI & Multi-Region Platform"]
+        direction LR
+        Vector["08 AI Vector Search<br/>Cosine Similarity"]
+        Saga["08 Distributed Saga<br/>Event Orchestrator"]
+        Kafka[("Apache Kafka KRaft<br/>Event Backbone")]
+        K8s["Kubernetes HPA + PDB<br/>eu-west-1 & us-east-1"]
+        Obs["Observability Stack<br/>Prometheus + Grafana + OTel"]
+        Vector --> K8s
+        Saga --> Kafka
+        Kafka --> Obs
+    end
+
+    Shield --> Auth
+    Shield --> Search
+    Shield --> LB
+    Enterprise --> Saga
+    Enterprise --> Vector
+
+    classDef edge fill:#0EA5E9,stroke:#0284C7,color:#FFFFFF,stroke-width:2px;
+    classDef core fill:#6366F1,stroke:#4338CA,color:#FFFFFF,stroke-width:2px;
+    classDef async fill:#F59E0B,stroke:#D97706,color:#0F172A,stroke-width:2px;
+    classDef hyper fill:#10B981,stroke:#047857,color:#FFFFFF,stroke-width:2px;
+    classDef infra fill:#EC4899,stroke:#BE185D,color:#FFFFFF,stroke-width:2px;
+
+    class Portal,Shield edge;
+    class Auth,Search,Enterprise core;
+    class LB,Queue async;
+    class Vector,Saga,K8s hyper;
+    class Kafka,Obs infra;
+```
+
+---
+
+## 🔄 Distributed Saga & Compensation Flow
+
+```mermaid
+flowchart LR
+    Req["🛒 Checkout Request<br/>Idempotency-Key"] --> Step1["1️⃣ Reserve Inventory<br/>Multi-Warehouse"]
+    Step1 --> Step2["2️⃣ Authorize Payment<br/>Gateway Capture"]
+    Step2 -->|Success| Step3["3️⃣ Dispatch Logistics<br/>TRK-... Generated"]
+    Step3 --> Done["✅ Order CONFIRMED<br/>Kafka: SagaStepCompleted"]
+
+    Step2 -->|Failure| Comp1["↩️ Compensate Stock<br/>Release Reservation"]
+    Comp1 --> Rolled["⚠️ Order COMPENSATED<br/>Kafka: SagaStepCompensated"]
+
+    classDef start fill:#3B82F6,stroke:#1D4ED8,color:#FFFFFF,stroke-width:2px;
+    classDef step fill:#8B5CF6,stroke:#6D28D9,color:#FFFFFF,stroke-width:2px;
+    classDef ok fill:#10B981,stroke:#047857,color:#FFFFFF,stroke-width:2px;
+    classDef fail fill:#EF4444,stroke:#B91C1C,color:#FFFFFF,stroke-width:2px;
+
+    class Req start;
+    class Step1,Step2,Step3 step;
+    class Done ok;
+    class Comp1,Rolled fail;
 ```
 
 ---
@@ -71,36 +127,43 @@ flowchart TB
 ## 🛠️ Tech Stack
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" />
-  <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" />
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" />
-  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" />
-  <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white" />
-  <img src="https://img.shields.io/badge/Apache%20Kafka-231F20?style=flat-square&logo=apachekafka&logoColor=white" />
-  <img src="https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white" />
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white" />
-  <img src="https://img.shields.io/badge/Prometheus-E6522C?style=flat-square&logo=prometheus&logoColor=white" />
-  <img src="https://img.shields.io/badge/Grafana-F46800?style=flat-square&logo=grafana&logoColor=white" />
+  <img src="./.github/assets/tech-stack.svg" alt="OmniChain Tech Stack" width="820" />
 </div>
 
 ---
 
 ## 🚀 Quick Start
 
-Each module is self-contained and can be launched independently with Docker Compose:
+<details>
+<summary><strong>⚡ Launch Module 06 — Async Queue, DLQ &amp; Nginx Load Balancer</strong></summary>
 
 ```bash
-# Run Module 06 (Load-Balanced Async Queue & DLQ Cluster)
-cd 06-AsyncQueue-LoadBalancer-Messenger && docker compose up --build
-
-# Run Module 07 (Enterprise Commerce & Cloud Logistics Core)
-cd 07-OmniChain-Enterprise-Core && docker compose up --build
-
-# Run Module 08 (Hyperscale AI Vector Search, Saga, Kafka, Prometheus & Grafana)
-cd 08-Hyperscale-Enterprise-Platform && docker compose up --build
+cd 06-AsyncQueue-LoadBalancer-Messenger
+docker compose up --build
+# Load Balancer Health: http://localhost:8083/health
 ```
+</details>
+
+<details>
+<summary><strong>🏢 Launch Module 07 — Enterprise Commerce &amp; Cloud Logistics Core</strong></summary>
+
+```bash
+cd 07-OmniChain-Enterprise-Core
+docker compose up --build
+# Enterprise Core Health: http://localhost:8004/health
+```
+</details>
+
+<details>
+<summary><strong>🌐 Launch Module 08 — Hyperscale AI Vector Search, Saga, Kafka &amp; Observability</strong></summary>
+
+```bash
+cd 08-Hyperscale-Enterprise-Platform
+docker compose up --build
+# EU Region: http://localhost:8005/health | US Region: http://localhost:8006/health
+# Prometheus: http://localhost:9090 | Grafana: http://localhost:3001
+```
+</details>
 
 ---
 
@@ -113,5 +176,5 @@ cd 08-Hyperscale-Enterprise-Platform && docker compose up --build
 ---
 
 <div align="center">
-  <sub>Built with engineering discipline for the <strong>OmniChain FullStack Roadmap</strong> • Release <code>v2.0.0</code></sub>
+  <sub>Crafted for the <strong>OmniChain FullStack &amp; Hyperscale Roadmap</strong> • Release <code>v2.0.0</code></sub>
 </div>
