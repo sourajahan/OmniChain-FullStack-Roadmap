@@ -1,0 +1,39 @@
+name: P8 Hyperscale Platform CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08-Hyperscale-Enterprise-Platform/**'
+      - '.github/workflows/p8-hyperscale-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '08-Hyperscale-Enterprise-Platform/**'
+      - '.github/workflows/p8-hyperscale-ci.yml'
+
+jobs:
+  hyperscale-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 08-Hyperscale-Enterprise-Platform/platform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: ruff check .
+      - run: pytest -v
+
+  docker-and-k8s-validation:
+    runs-on: ubuntu-latest
+    needs: [hyperscale-tests]
+    defaults:
+      run:
+        working-directory: 08-Hyperscale-Enterprise-Platform
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose config --quiet
+      - run: docker compose build hyperscale-eu

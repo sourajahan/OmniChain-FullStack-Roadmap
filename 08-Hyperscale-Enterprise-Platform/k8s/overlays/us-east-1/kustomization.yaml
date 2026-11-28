@@ -1,0 +1,10 @@
+resources:
+  - ../../base
+patches:
+  - target:
+      kind: Deployment
+      name: omnichain-hyperscale
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/env/0/value
+        value: us-east-1

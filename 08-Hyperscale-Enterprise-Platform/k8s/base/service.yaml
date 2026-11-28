@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: omnichain-hyperscale
+spec:
+  selector:
+    app: omnichain-hyperscale
+  ports:
+    - port: 80
+      targetPort: 8005
