@@ -27,85 +27,17 @@
 
 ## 🏗️ System Architecture
 
-```mermaid
-flowchart TB
-    subgraph EDGE["🌐 Edge, Portal & Security Layer"]
-        direction LR
-        Portal["03 OmniStore Portal<br/>React + TypeScript + Tailwind"]
-        Shield["05 CloudShield Gateway<br/>TLS + Rate Limit + OWASP"]
-        Portal --> Shield
-    end
-
-    subgraph CORE["⚙️ Core Commerce & Cloud Logistics"]
-        direction LR
-        Auth["02 CoreAuth & Order API<br/>FastAPI + JWT + RBAC"]
-        Search["04 Search & Media Engine<br/>Redis Cache + DevOps"]
-        Enterprise["07 OmniChain Enterprise Core<br/>Multi-Warehouse + Logistics"]
-        Auth --> Enterprise
-    end
-
-    subgraph ASYNC["⚡ Async Messaging & Load Balancing"]
-        direction LR
-        LB["06 Nginx Load Balancer<br/>least_conn"]
-        Queue["06 Async Queue & Workers<br/>Redis + Idempotency + DLQ"]
-        LB --> Queue
-    end
-
-    subgraph HYPER["🚀 Hyperscale, AI & Multi-Region Platform"]
-        direction LR
-        Vector["08 AI Vector Search<br/>Cosine Similarity"]
-        Saga["08 Distributed Saga<br/>Event Orchestrator"]
-        Kafka[("Apache Kafka KRaft<br/>Event Backbone")]
-        K8s["Kubernetes HPA + PDB<br/>eu-west-1 & us-east-1"]
-        Obs["Observability Stack<br/>Prometheus + Grafana + OTel"]
-        Vector --> K8s
-        Saga --> Kafka
-        Kafka --> Obs
-    end
-
-    Shield --> Auth
-    Shield --> Search
-    Shield --> LB
-    Enterprise --> Saga
-    Enterprise --> Vector
-
-    classDef edge fill:#0EA5E9,stroke:#0284C7,color:#FFFFFF,stroke-width:2px;
-    classDef core fill:#6366F1,stroke:#4338CA,color:#FFFFFF,stroke-width:2px;
-    classDef async fill:#F59E0B,stroke:#D97706,color:#0F172A,stroke-width:2px;
-    classDef hyper fill:#10B981,stroke:#047857,color:#FFFFFF,stroke-width:2px;
-    classDef infra fill:#EC4899,stroke:#BE185D,color:#FFFFFF,stroke-width:2px;
-
-    class Portal,Shield edge;
-    class Auth,Search,Enterprise core;
-    class LB,Queue async;
-    class Vector,Saga,K8s hyper;
-    class Kafka,Obs infra;
-```
+<div align="center">
+  <img src="./.github/assets/architecture.svg" alt="OmniChain System Architecture" width="100%" />
+</div>
 
 ---
 
 ## 🔄 Distributed Saga & Compensation Flow
 
-```mermaid
-flowchart LR
-    Req["🛒 Checkout Request<br/>Idempotency-Key"] --> Step1["1️⃣ Reserve Inventory<br/>Multi-Warehouse"]
-    Step1 --> Step2["2️⃣ Authorize Payment<br/>Gateway Capture"]
-    Step2 -->|Success| Step3["3️⃣ Dispatch Logistics<br/>TRK-... Generated"]
-    Step3 --> Done["✅ Order CONFIRMED<br/>Kafka: SagaStepCompleted"]
-
-    Step2 -->|Failure| Comp1["↩️ Compensate Stock<br/>Release Reservation"]
-    Comp1 --> Rolled["⚠️ Order COMPENSATED<br/>Kafka: SagaStepCompensated"]
-
-    classDef start fill:#3B82F6,stroke:#1D4ED8,color:#FFFFFF,stroke-width:2px;
-    classDef step fill:#8B5CF6,stroke:#6D28D9,color:#FFFFFF,stroke-width:2px;
-    classDef ok fill:#10B981,stroke:#047857,color:#FFFFFF,stroke-width:2px;
-    classDef fail fill:#EF4444,stroke:#B91C1C,color:#FFFFFF,stroke-width:2px;
-
-    class Req start;
-    class Step1,Step2,Step3 step;
-    class Done ok;
-    class Comp1,Rolled fail;
-```
+<div align="center">
+  <img src="./.github/assets/saga-flow.svg" alt="OmniChain Distributed Saga Flow" width="100%" />
+</div>
 
 ---
 
