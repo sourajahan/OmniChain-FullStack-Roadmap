@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: omnichain
+      POSTGRES_PASSWORD: omnichain
+      POSTGRES_DB: omnichain_core
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U omnichain -d omnichain_core"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  enterprise-core:
+    build:
+      context: ./core
+    environment:
+      APP_ENV: production
+      DATABASE_URL: postgresql://omnichain:omnichain@postgres:5432/omnichain_core
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - "8004:8004"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8004/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

@@ -1,0 +1,39 @@
+name: P7 OmniChain Enterprise Core CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '07-OmniChain-Enterprise-Core/**'
+      - '.github/workflows/p7-enterprise-core-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '07-OmniChain-Enterprise-Core/**'
+      - '.github/workflows/p7-enterprise-core-ci.yml'
+
+jobs:
+  enterprise-core-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 07-OmniChain-Enterprise-Core/core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: ruff check .
+      - run: pytest -v
+
+  docker-validation:
+    runs-on: ubuntu-latest
+    needs: [enterprise-core-tests]
+    defaults:
+      run:
+        working-directory: 07-OmniChain-Enterprise-Core
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose config --quiet
+      - run: docker compose build
