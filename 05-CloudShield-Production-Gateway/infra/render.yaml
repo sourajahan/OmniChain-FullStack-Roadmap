@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: cloudshield-production-gateway
+    runtime: docker
+    dockerfilePath: ./05-CloudShield-Production-Gateway/gateway/Dockerfile
+    dockerContext: ./05-CloudShield-Production-Gateway/gateway
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: API_SECRET_KEY
+        generateValue: true
+      - key: RATE_LIMIT_REQUESTS
+        value: "60"
+      - key: RATE_LIMIT_WINDOW_SECONDS
+        value: "60"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: omnichain-managed-db
+          property: connectionString
+
+databases:
+  - name: omnichain-managed-db
+    plan: free
