@@ -148,6 +148,6 @@
 ---
 
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0D9488,35:0284C7,70:1E3A8A,100:0F172A&height=115&section=footer" width="100%" />
+  <img src="./.github/assets/banner.svg" width="100%" />
   <sub>Architected & Engineered with ❤️ by <a href="https://github.com/sourajahan">Soura</a></sub>
 </div>
