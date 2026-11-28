@@ -1,7 +1,7 @@
  <div align="center">
 
 <!-- Animated Gradient Wave Banner -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,30:1E3A8A,65:0284C7,100:0D9488&height=220&section=header&text=OmniChain%20Enterprise%20Platform&fontSize=42&fontColor=FFFFFF&animation=fadeIn&fontAlignY=36&desc=End-to-End%20Full-Stack%20%26%20Distributed%20Systems%20Engineering%20Blueprint&descAlignY=60&descSize=16&descColor=BAE6FD" width="100%" />
+<img src="./.github/assets/banner.svg" width="100%" />
 
 <!-- Live Dynamic Typing Subtitle -->
 <a href="https://github.com/sourajahan/OmniChain-FullStack-Roadmap">
