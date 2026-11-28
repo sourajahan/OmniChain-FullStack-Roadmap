@@ -1,0 +1,39 @@
+name: P6 AsyncQueue LoadBalancer CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '06-AsyncQueue-LoadBalancer-Messenger/**'
+      - '.github/workflows/p6-queue-lb-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '06-AsyncQueue-LoadBalancer-Messenger/**'
+      - '.github/workflows/p6-queue-lb-ci.yml'
+
+jobs:
+  service-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 06-AsyncQueue-LoadBalancer-Messenger/service
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: ruff check .
+      - run: pytest -v
+
+  docker-cluster:
+    runs-on: ubuntu-latest
+    needs: [service-tests]
+    defaults:
+      run:
+        working-directory: 06-AsyncQueue-LoadBalancer-Messenger
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose config --quiet
+      - run: docker compose build
