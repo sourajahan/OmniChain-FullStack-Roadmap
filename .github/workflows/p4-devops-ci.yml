@@ -1,0 +1,57 @@
+name: P4 SearchMedia DevOps CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '04-SearchMedia-DevOps-Engine/**'
+      - '.github/workflows/p4-devops-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '04-SearchMedia-DevOps-Engine/**'
+      - '.github/workflows/p4-devops-ci.yml'
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 04-SearchMedia-DevOps-Engine/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: ruff check .
+      - run: pytest -v
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 04-SearchMedia-DevOps-Engine/frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: 04-SearchMedia-DevOps-Engine/frontend/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    defaults:
+      run:
+        working-directory: 04-SearchMedia-DevOps-Engine
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose config --quiet
+      - run: docker compose build
